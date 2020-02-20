@@ -1,0 +1,65 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>发布 - 社区</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/static/css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" href="/static/css/demo.css"/>
+    <script src="/static/js/jquery-3.4.1.min.js"></script>
+    <script src="/static/js/bootstrap.min.js" type="application/javascript"></script>
+    <script type="text/javascript" src="/static/js/wangEditor.js"></script>
+</head>
+<body>
+<div th:insert="nav :: nav"></div>
+<div class="container-fluid main">
+    <div class="row">
+        <div class="col-lg-9 col-md-12 col-sm-12" style="margin-bottom: 15px;">
+
+            <h2><span class="glyphicon glyphicon-plus" style="margin-right: 10px;" aria-hidden="true"></span>发起</h2>
+            <hr>
+
+            <form action="/publish" method="post">
+                <input type="hidden" name="id" th:value="${id}">
+                <div class="form-group">
+                    <label for="title">标题：</label>
+                    <input type="text" class="form-control" th:value="${title}" id="title" name="title" placeholder="标题">
+                </div>
+                <div>
+                    <label for="description">内容：</label>
+                    <input type="hidden" name="description" id="description">
+                </div>
+
+                <div id="editor" th:utext="${description}" style="margin-bottom: 15px;"></div>
+                <script type="text/javascript">
+                    var E = window.wangEditor;
+                    var editor = new E('#editor');
+                    var $text1 = $('#description');
+                    editor.customConfig.onchange = function (html) {
+                        // 监控变化，同步更新到 textarea
+                        $text1.val(html)
+                    };
+                    editor.create();
+                    // 初始化 textarea 的值
+                    $text1.val(editor.txt.html());
+                </script>
+                <div class="form-group">
+                    <label for="tag">标签（以英文逗号分隔）：</label>
+                    <input autocomplete="off" type="text" class="form-control" th:value="${tag}" id="tag" name="tag" placeholder="标签">
+                </div>
+                <span style="color:red" th:text="${error}"></span>
+                <button type="submit" class="btn btn-success btn-publish">发布</button>
+            </form>
+
+        </div>
+        <div class="col-lg-3 col-md-12 col-sm-12" style="margin-bottom: 15px;">
+            <h3>问题发起指南</h3>
+            <hr>
+            • 问题标题: 请用准确的语言描述您发布的问题思想<br>
+            • 问题补充: 详细补充您的问题内容, 并提供一些相关的素材以供参与者更多的了解您所要问题的主题思想<br>
+            • 选择话题: 选择一个或者多个合适的话题, 让您发布的问题得到更多有相同兴趣的人参与. 所有人可以在您发布问题之后添加和编辑该问题所属的话题<br>
+        </div>
+    </div>
+</div>
+</body>
+</html>

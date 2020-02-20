@@ -1,0 +1,59 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>注册</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" href="../static/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="../static/css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" href="../static/css/demo.css"/>
+    <script src="../static/js/jquery-3.4.1.min.js"></script>
+    <script src="../static/js/bootstrap.min.js" type="application/javascript"></script>
+</head>
+<body>
+<div th:insert="nav :: nav"></div>
+<div class="container-fluid main">
+    <div class="row">
+        <div class="col-xs-1 col-sm-2 col-md-3"></div>
+        <div class="col-xs-10 col-sm-8 col-md-6">
+            <form style="margin: 100px 0;" action="/register" method="post">
+                <h3>注册</h3>
+                <hr>
+                <div class="form-group">
+                    <label for="username">用户名 *</label>
+                    <input name="username" type="text" class="form-control" id="username" placeholder="用户名">
+                </div>
+                <div class="form-group">
+                    <label for="password">密码 *</label>
+                    <input name="password" type="password" class="form-control" id="password" placeholder="密码">
+                </div>
+                <div class="form-group">
+                    <label for="re_password">重复密码 *</label>
+                    <input name="re_password" type="password" class="form-control" id="re_password" placeholder="重复密码">
+                </div>
+                <div class="form-group">
+                    <label for="name">昵称 *</label>
+                    <input name="name" type="text" class="form-control" id="name" placeholder="昵称">
+                </div>
+                <div class="form-group">
+                    <label for="avatar">头像（图片网址）</label>
+                    <input name="avatar" type="text" class="form-control" id="avatar" placeholder="输入图片URL，留空使用默认头像">
+                    <div style="margin-top: 3px;">
+                        <a href="https://imgchr.com/upload" target="_blank">点这里上传本地图片</a>（上传后，请将图片URL链接复制到上方）
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="bio">简介</label>
+                    <input name="bio" type="text" class="form-control" id="bio" placeholder="简介">
+                </div>
+                <button type="submit" class="btn btn-default">注册</button>
+                <span style="color:red; float: right;" th:text="${error}"></span>
+
+            </form>
+        </div>
+        <div class="col-xs-1 col-sm-2 col-md-3"></div>
+    </div>
+
+</div>
+</body>
+</html>

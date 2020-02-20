@@ -1,0 +1,43 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>登录</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" href="../static/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="../static/css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" href="../static/css/demo.css"/>
+    <script src="../static/js/jquery-3.4.1.min.js"></script>
+    <script src="../static/js/bootstrap.min.js" type="application/javascript"></script>
+</head>
+<body>
+<div th:insert="nav :: nav"></div>
+<div class="container-fluid main">
+    <div class="row">
+        <div class="col-xs-1 col-sm-2 col-md-3"></div>
+        <div class="col-xs-10 col-sm-8 col-md-6">
+            <form style="margin: 100px 0;" action="/login" method="post">
+                <h3>登录</h3>
+                <hr>
+                <div class="form-group">
+                    <label for="username">用户名</label>
+                    <input name="username" type="text" class="form-control" id="username" placeholder="用户名">
+                </div>
+                <div class="form-group">
+                    <label for="password">密码</label>
+                    <input name="password" type="password" class="form-control" id="password" placeholder="密码">
+                </div>
+                <button type="submit" class="btn btn-default">登录</button>
+                <span style="color:red; float: right;" th:text="${error}"></span>
+                <hr>
+                <div>
+                    <a href="https://github.com/login/oauth/authorize?client_id=b6c1bd44d0af50fbb8ce&redirect_uri=http://localhost:8080/callback&scope=user&state=1">用 GitHub 登录</a>
+                    <a href="/register" style="margin-left: 20px;">注册</a>
+                </div>
+            </form>
+        </div>
+        <div class="col-xs-1 col-sm-2 col-md-3"></div>
+    </div>
+
+</div>
+</body>
+</html>

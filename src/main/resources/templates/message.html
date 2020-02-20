@@ -1,0 +1,33 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>信息</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/static/css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" href="/static/css/demo.css"/>
+    <script src="/static/js/jquery-3.4.1.min.js"></script>
+    <script src="/static/js/bootstrap.min.js" type="application/javascript"></script>
+</head>
+<body>
+<div th:insert="nav :: nav"></div>
+<script type="text/javascript">
+    function jump() {
+        window.location.href = $("#redirect").val();
+    }
+    setTimeout(jump, 3000);
+</script>
+<div class="container-fluid main">
+    <div class="row">
+        <div class="col-xs-1 col-sm-2 col-md-3"></div>
+        <div class="col-xs-10 col-sm-8 col-md-6" style="margin: 100px 0;">
+            <input type="hidden" id="redirect" th:value="${redirect}">
+            <h4 style="text-align: center;" th:text="${message}"></h4><br>
+            <p style="text-align: center;"><a th:href="${redirect}">3 秒后自动跳转</a></p>
+        </div>
+        <div class="col-xs-1 col-sm-2 col-md-3"></div>
+    </div>
+
+</div>
+</body>
+</html>

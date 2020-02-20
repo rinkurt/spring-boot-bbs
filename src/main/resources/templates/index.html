@@ -1,0 +1,89 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>社区</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" href="../static/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="../static/css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" href="../static/css/demo.css"/>
+    <script src="../static/js/jquery-3.4.1.min.js"></script>
+    <script src="../static/js/bootstrap.min.js" type="application/javascript"></script>
+</head>
+
+<script type="application/javascript">
+    window.onload = function () {
+        let closable = window.localStorage.getItem("closable");
+        if (closable === "1") {
+            window.close();
+            window.localStorage.removeItem("closable");
+        }
+    }
+</script>
+
+<body>
+
+<div th:insert="nav :: nav"></div>
+
+<div class="container-fluid main">
+    <div class="row">
+        <div class="col-lg-9 col-md-12 col-sm-12">
+            <h2><span class="glyphicon glyphicon-list" style="margin-right: 10px;" aria-hidden="true"></span>发现</h2>
+            <hr>
+
+            <div class="media" th:each="question : ${pagination.getList()}">
+                <div class="media-left">
+                    <a href="#">
+                        <img class="media-object media-avatar img-rounded" th:src="${question.user.avatarUrl}">
+                    </a>
+                </div>
+                <div class="media-body">
+                    <h4 class="media-heading">
+                        <a th:href="@{'/question/' + ${question.id}}" th:text="${question.title}"></a>
+                    </h4>
+                    <span class="text-desc">
+                        <span th:text="${question.commentCount}"></span> 个回复 ・
+                        <span th:text="${question.viewCount}"></span> 次浏览 ・
+                        <span th:text="${#dates.format(question.gmtCreate, 'yyyy-MM-dd HH:mm')}"></span>
+                    </span>
+                </div>
+            </div>
+            <nav aria-label="Page navigation" class="navbar-right" style="margin-right: 20px;">
+                <ul class="pagination">
+                    <li>
+                        <a th:if="${pagination.showFirstPage}" th:href="@{/(page=1)}"
+                           aria-label="FirstPage">
+                            <span aria-hidden="true">&lt;&lt;</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a th:if="${pagination.showPrevious}" th:href="@{/(page=${pagination.page - 1})}"
+                           aria-label="Previous">
+                            <span aria-hidden="true">&lt;</span>
+                        </a>
+                    </li>
+                    <li th:each="page : ${pagination.pages}" th:class="${pagination.page == page}? 'active' : ''">
+                        <a th:href="@{/(page=${page})}" th:text="${page}"></a>
+                    </li>
+                    <li>
+                        <a th:if="${pagination.showNext}" th:href="@{/(page=${pagination.page + 1})}"
+                           aria-label="Next">
+                            <span aria-hidden="true">&gt;</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a th:if="${pagination.showEndPage}" th:href="@{/(page=${pagination.totalPage})}"
+                           aria-label="EndPage">
+                            <span aria-hidden="true">&gt;&gt;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+        </div>
+        <div class="col-lg-3 col-md-12 col-sm-12">
+            <h3>热门话题</h3>
+        </div>
+    </div>
+</div>
+</body>
+</html>
