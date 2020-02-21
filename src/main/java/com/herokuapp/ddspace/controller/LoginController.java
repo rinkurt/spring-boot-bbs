@@ -6,6 +6,7 @@ import com.herokuapp.ddspace.mapper.UserMapper;
 import com.herokuapp.ddspace.model.User;
 import com.herokuapp.ddspace.model.UserExample;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,15 +22,23 @@ import java.util.UUID;
 @Controller
 public class LoginController {
 
+    @Value("${github.client_id}")
+    private String clientId;
+
+    @Value("${github.redirect_uri}")
+    private String redirectUri;
+
     @Autowired(required = false)
     private UserMapper userMapper;
 
     @GetMapping("/login")
-    public String login(HttpServletRequest request) {
+    public String login(HttpServletRequest request, Model model) {
         User user = (User) request.getSession().getAttribute("user");
         if (user != null) {
             throw new CustomizeException(ResultEnum.REPETITIVE_LOGIN);
         }
+        model.addAttribute("clientId", clientId);
+        model.addAttribute("redirectUri", redirectUri);
         return "login";
     }
 

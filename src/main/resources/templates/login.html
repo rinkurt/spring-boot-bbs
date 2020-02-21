@@ -30,7 +30,7 @@
                 <span style="color:red; float: right;" th:text="${error}"></span>
                 <hr>
                 <div>
-                    <a href="https://github.com/login/oauth/authorize?client_id=b6c1bd44d0af50fbb8ce&redirect_uri=http://localhost:8080/callback&scope=user&state=1">用 GitHub 登录</a>
+                    <a th:href="@{https://github.com/login/oauth/authorize(client_id=${clientId}, redirect_uri=${redirectUri}, scope='user', state=1)}">用 GitHub 登录</a>
                     <a href="/register" style="margin-left: 20px;">注册</a>
                 </div>
             </form>
