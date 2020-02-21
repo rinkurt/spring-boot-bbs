@@ -50,6 +50,9 @@ public class NotificationService {
         } else {
             return ResultEnum.NULL_COMMENT_TYPE;
         }
+        if (notification.getReceiver().equals(notification.getNotifier())) {
+            return ResultEnum.SUCCESS;
+        }
         if (notificationMapper.insertSelective(notification) == 0) {
             return ResultEnum.UNKNOWN;
         }

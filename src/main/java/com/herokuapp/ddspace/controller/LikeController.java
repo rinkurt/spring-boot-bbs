@@ -3,12 +3,8 @@ package com.herokuapp.ddspace.controller;
 import com.herokuapp.ddspace.dto.CommentType;
 import com.herokuapp.ddspace.dto.LikeDTO;
 import com.herokuapp.ddspace.enums.ResultEnum;
-import com.herokuapp.ddspace.mapper.CommentExtMapper;
-import com.herokuapp.ddspace.mapper.LikesMapper;
-import com.herokuapp.ddspace.mapper.QuestionExtMapper;
-import com.herokuapp.ddspace.model.Likes;
-import com.herokuapp.ddspace.model.LikesKey;
-import com.herokuapp.ddspace.model.User;
+import com.herokuapp.ddspace.mapper.*;
+import com.herokuapp.ddspace.model.*;
 import com.herokuapp.ddspace.service.NotificationService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +28,12 @@ public class LikeController {
     private CommentExtMapper commentExtMapper;
 
     @Autowired(required = false)
+    private QuestionMapper questionMapper;
+
+    @Autowired(required = false)
+    private CommentMapper commentMapper;
+
+    @Autowired(required = false)
     private LikesMapper likesMapper;
 
     @ResponseBody
@@ -49,6 +51,21 @@ public class LikeController {
         if (likeDTO.getType() != CommentType.LIKE_QUESTION &&
                 likeDTO.getType() != CommentType.LIKE_COMMENT) {
             return ResultEnum.NULL_LIKE_TYPE;
+        }
+
+        // 不能给自己点赞
+        if (likeDTO.getType() == CommentType.LIKE_QUESTION) {
+            Question question = questionMapper.selectByPrimaryKey(likeDTO.getId());
+            if (question.getCreator().equals(user.getId())) {
+                return ResultEnum.SUCCESS;
+            }
+        } else if (likeDTO.getType() == CommentType.LIKE_COMMENT) {
+            Comment comment = commentMapper.selectByPrimaryKey(likeDTO.getId());
+            if (comment.getUserId().equals(user.getId())) {
+                return ResultEnum.SUCCESS;
+            }
+        } else {
+            return ResultEnum.NULL_COMMENT_TYPE;
         }
 
         LikesKey likesKey = new LikesKey();
@@ -85,8 +102,6 @@ public class LikeController {
             if (commentExtMapper.incLike(likeDTO.getId(), num) == 0) {
                 return ResultEnum.COMMENT_NOT_FOUND;
             }
-        } else {
-            return ResultEnum.NULL_COMMENT_TYPE;
         }
 
         // Notification
