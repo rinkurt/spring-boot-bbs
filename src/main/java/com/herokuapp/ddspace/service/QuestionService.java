@@ -36,13 +36,34 @@ public class QuestionService {
     private LikesMapper likesMapper;
 
 
-    public PaginationDTO<QuestionDTO> listByExample(QuestionExample example, Integer page, Integer size) {
+    public PaginationDTO<QuestionDTO> listByExample(QuestionExample example, String search, Integer page, Integer size) {
         PaginationDTO<QuestionDTO> paginationDTO = new PaginationDTO<>();
-        Integer totalCount = (int) questionMapper.countByExample(example);
+        int totalCount;
+        if (search != null) {
+            StringBuilder sb = new StringBuilder();
+            for (String s : search.split(" ")) {
+                if (s != null && !s.equals("")) {
+                    if (sb.length() != 0) {
+                        sb.append('|');
+                    }
+                    sb.append(s);
+                }
+            }
+            search = sb.toString();
+            search = search.toLowerCase();
+            totalCount = questionExtMapper.countBySearch(search);
+        } else {
+            totalCount = (int) questionMapper.countByExample(example);
+        }
         RowBounds rowBounds = paginationDTO.setPagination(totalCount, page, size);
 
         example.setOrderByClause("gmt_modified desc");
-        List<Question> questions = questionMapper.selectByExampleWithRowbounds(example, rowBounds);
+        List<Question> questions;
+        if (search != null) {
+            questions = questionExtMapper.selectBySearchWithLimit(search, rowBounds.getOffset(), rowBounds.getLimit());
+        } else {
+            questions = questionMapper.selectByExampleWithRowbounds(example, rowBounds);
+        }
         List<QuestionDTO> questionDTOList = new ArrayList<>();
         for (Question question : questions) {
             QuestionDTO questionDto = new QuestionDTO();
@@ -56,9 +77,12 @@ public class QuestionService {
         return paginationDTO;
     }
 
+    public PaginationDTO<QuestionDTO> listByExample(QuestionExample example, Integer page, Integer size) {
+        return listByExample(example, null, page, size);
+    }
 
-    public PaginationDTO<QuestionDTO> list(Integer page, Integer size) {
-        return listByExample(new QuestionExample(), page, size);
+    public PaginationDTO<QuestionDTO> list(String search, Integer page, Integer size) {
+        return listByExample(new QuestionExample(), search, page, size);
     }
 
     public PaginationDTO<QuestionDTO> listByUser(Integer userId, Integer page, Integer size) {

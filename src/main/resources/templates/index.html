@@ -50,28 +50,28 @@
             <nav aria-label="Page navigation" class="navbar-right" style="margin-right: 20px;">
                 <ul class="pagination">
                     <li>
-                        <a th:if="${pagination.showFirstPage}" th:href="@{/(page=1)}"
+                        <a th:if="${pagination.showFirstPage}" th:href="@{/(page=1, search=${search})}"
                            aria-label="FirstPage">
                             <span aria-hidden="true">&lt;&lt;</span>
                         </a>
                     </li>
                     <li>
-                        <a th:if="${pagination.showPrevious}" th:href="@{/(page=${pagination.page - 1})}"
+                        <a th:if="${pagination.showPrevious}" th:href="@{/(page=${pagination.page - 1}, search=${search})}"
                            aria-label="Previous">
                             <span aria-hidden="true">&lt;</span>
                         </a>
                     </li>
                     <li th:each="page : ${pagination.pages}" th:class="${pagination.page == page}? 'active' : ''">
-                        <a th:href="@{/(page=${page})}" th:text="${page}"></a>
+                        <a th:href="@{/(page=${page}, search=${search})}" th:text="${page}"></a>
                     </li>
                     <li>
-                        <a th:if="${pagination.showNext}" th:href="@{/(page=${pagination.page + 1})}"
+                        <a th:if="${pagination.showNext}" th:href="@{/(page=${pagination.page + 1}, search=${search})}"
                            aria-label="Next">
                             <span aria-hidden="true">&gt;</span>
                         </a>
                     </li>
                     <li>
-                        <a th:if="${pagination.showEndPage}" th:href="@{/(page=${pagination.totalPage})}"
+                        <a th:if="${pagination.showEndPage}" th:href="@{/(page=${pagination.totalPage}, search=${search})}"
                            aria-label="EndPage">
                             <span aria-hidden="true">&gt;&gt;</span>
                         </a>
