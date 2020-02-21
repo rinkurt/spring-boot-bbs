@@ -69,7 +69,11 @@ public class QuestionService {
             QuestionDTO questionDto = new QuestionDTO();
             BeanUtils.copyProperties(question, questionDto);
             User user = userMapper.selectByPrimaryKey(question.getCreator());
-            questionDto.setUser(Objects.requireNonNullElse(user, AnonymousUser.USER));
+            if (user != null) {
+                questionDto.setUser(user);
+            } else {
+                questionDto.setUser(AnonymousUser.USER);
+            }
             questionDTOList.add(questionDto);
         }
         paginationDTO.setList(questionDTOList);

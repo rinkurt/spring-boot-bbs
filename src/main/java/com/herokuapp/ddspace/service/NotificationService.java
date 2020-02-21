@@ -105,7 +105,11 @@ public class NotificationService {
             NotificationDTO notificationDTO = new NotificationDTO();
             BeanUtils.copyProperties(notification, notificationDTO);
             User user = userMapper.selectByPrimaryKey(notification.getNotifier());
-            notificationDTO.setNotifierUser(Objects.requireNonNullElse(user, AnonymousUser.USER));
+            if (user != null) {
+                notificationDTO.setNotifierUser(user);
+            } else {
+                notificationDTO.setNotifierUser(AnonymousUser.USER);
+            }
             int type = notificationDTO.getType();
             if (type == CommentType.QUESTION || type == CommentType.LIKE_QUESTION) {
                 Question question = questionMapper.selectByPrimaryKey(notificationDTO.getOuterid());
