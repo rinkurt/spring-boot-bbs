@@ -18,12 +18,12 @@ public interface QuestionExtMapper {
     @Update("update question set like_count = like_count + #{num} where id = #{id}")
     int incLike(int id, int num);
 
-    @Select("select * from question where id != #{id} and tag regexp #{regexp}")
+    @Select("select * from question where id != #{id} and tag ~* #{regexp}")
     List<Question> selectRelated(int id, String regexp);
 
-    @Select("select count(*) from question where lower(title) regexp #{search}")
+    @Select("select count(*) from question where title ~* #{search}")
     int countBySearch(String search);
 
-    @Select("select * from question where lower(title) regexp #{search} limit #{limit} offset #{offset}")
+    @Select("select * from question where title ~* #{search} limit #{limit} offset #{offset}")
     List<Question> selectBySearchWithLimit(String search, int offset, int limit);
 }

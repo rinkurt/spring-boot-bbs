@@ -73,7 +73,7 @@ public class CommentService {
                 .andParentIdEqualTo(parentId)
                 .andTypeEqualTo(type);
         commentExample.setOrderByClause("gmt_create desc");
-        List<Comment> comments = commentMapper.selectByExampleWithBLOBs(commentExample);
+        List<Comment> comments = commentMapper.selectByExample(commentExample);
         HashMap<Integer, User> userMap = new HashMap<>();
         List<CommentDTO> commentDTOList = new ArrayList<>();
         for (Comment comment : comments) {

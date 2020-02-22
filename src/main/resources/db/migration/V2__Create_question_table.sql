@@ -1,6 +1,6 @@
 create table question
 (
-    id int auto_increment primary key,
+    id serial,
     title varchar(50),
     description text,
     gmt_create bigint,
@@ -11,3 +11,11 @@ create table question
     like_count int default 0,
     tag varchar(256)
 );
+
+create unique index question_id_uindex
+    on question (id);
+
+alter table question
+    add constraint question_pk
+        primary key (id);
+

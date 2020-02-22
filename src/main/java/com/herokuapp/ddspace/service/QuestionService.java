@@ -50,7 +50,6 @@ public class QuestionService {
                 }
             }
             search = sb.toString();
-            search = search.toLowerCase();
             totalCount = questionExtMapper.countBySearch(search);
         } else {
             totalCount = (int) questionMapper.countByExample(example);

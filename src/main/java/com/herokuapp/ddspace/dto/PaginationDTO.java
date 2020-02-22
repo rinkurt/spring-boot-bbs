@@ -28,6 +28,9 @@ public class PaginationDTO <T> {
         else {
             totalPage = totalCount / size + 1;
         }
+        if (totalPage == 0) {
+            totalPage = 1;
+        }
         this.totalPage = totalPage;
 
         if (page < 1) page = 1;
