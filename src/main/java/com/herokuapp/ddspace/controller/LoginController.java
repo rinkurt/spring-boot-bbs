@@ -22,9 +22,6 @@ import java.util.UUID;
 @Controller
 public class LoginController {
 
-    @Value("${github.redirect_uri}")
-    private String redirectUri;
-
     @Autowired(required = false)
     private UserMapper userMapper;
 
@@ -35,7 +32,7 @@ public class LoginController {
             throw new CustomizeException(ResultEnum.REPETITIVE_LOGIN);
         }
         model.addAttribute("clientId", System.getenv("GITHUB_CLIENT_ID"));
-        model.addAttribute("redirectUri", redirectUri);
+        model.addAttribute("redirectUri", System.getenv("GITHUB_CALLBACK_URL"));
         return "login";
     }
 

@@ -29,9 +29,6 @@ public class AuthController {
     @Autowired(required = false)
     private UserService userService;
 
-    @Value("${github.redirect_uri}")
-    private String redirectUri;
-
     @GetMapping("/callback")
     public String callback(@RequestParam(name="code") String code,
                            @RequestParam(name="state") String state,
@@ -41,7 +38,7 @@ public class AuthController {
         accessTokenDTO.setClient_id(System.getenv("GITHUB_CLIENT_ID"));
         accessTokenDTO.setClient_secret(System.getenv("GITHUB_CLIENT_SECRET"));
         accessTokenDTO.setCode(code);
-        accessTokenDTO.setRedirect_uri(redirectUri);
+        accessTokenDTO.setRedirect_uri(System.getenv("GITHUB_CALLBACK_URL"));
         accessTokenDTO.setState(state);
         String accessToken = githubProvider.getAccessToken(accessTokenDTO);
         GithubUser githubUser = githubProvider.getUser(accessToken);
