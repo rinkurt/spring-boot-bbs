@@ -1,1 +1,0 @@
-release: ./mvnw flyway:migrate
