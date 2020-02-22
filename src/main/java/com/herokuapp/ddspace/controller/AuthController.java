@@ -29,12 +29,6 @@ public class AuthController {
     @Autowired(required = false)
     private UserService userService;
 
-    @Value("${github.client_id}")
-    private String clientId;
-
-    @Value("${github.client_secret}")
-    private String clientSecret;
-
     @Value("${github.redirect_uri}")
     private String redirectUri;
 
@@ -44,8 +38,8 @@ public class AuthController {
                            HttpServletRequest request,
                            HttpServletResponse response) {
         AccessTokenDTO accessTokenDTO = new AccessTokenDTO();
-        accessTokenDTO.setClient_id(clientId);
-        accessTokenDTO.setClient_secret(clientSecret);
+        accessTokenDTO.setClient_id(System.getenv("GITHUB_CLIENT_ID"));
+        accessTokenDTO.setClient_secret(System.getenv("GITHUB_CLIENT_SECRET"));
         accessTokenDTO.setCode(code);
         accessTokenDTO.setRedirect_uri(redirectUri);
         accessTokenDTO.setState(state);
