@@ -1,13 +1,13 @@
 package com.herokuapp.ddspace.service;
 
-import com.herokuapp.ddspace.dto.AnonymousUser;
+import com.herokuapp.ddspace.cache.AnonymousUser;
 import com.herokuapp.ddspace.dto.CommentDTO;
 import com.herokuapp.ddspace.dto.CommentType;
 import com.herokuapp.ddspace.enums.ResultEnum;
 import com.herokuapp.ddspace.mapper.*;
 import com.herokuapp.ddspace.model.*;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,25 +16,16 @@ import java.util.HashMap;
 import java.util.List;
 
 @Service
+@AllArgsConstructor
 public class CommentService {
 
-    @Autowired(required = false)
     CommentMapper commentMapper;
-
-    @Autowired(required = false)
     CommentExtMapper commentExtMapper;
-
-    @Autowired(required = false)
     UserMapper userMapper;
-
-    @Autowired(required = false)
     QuestionMapper questionMapper;
-
-    @Autowired(required = false)
     QuestionExtMapper questionExtMapper;
-
-    @Autowired(required = false)
     LikesMapper likesMapper;
+    AnonymousUser anonymousUser;
 
     @Transactional
     public ResultEnum insert(Comment comment) {
@@ -86,7 +77,7 @@ public class CommentService {
             } else {
                 User user = userMapper.selectByPrimaryKey(userId);
                 if (user == null) {
-                    commentDTO.setUser(AnonymousUser.USER);
+                    commentDTO.setUser(anonymousUser);
                 } else {
                     userMap.put(userId, user);
                     commentDTO.setUser(user);

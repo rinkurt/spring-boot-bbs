@@ -24,6 +24,6 @@ public interface QuestionExtMapper {
     @Select("select count(*) from question where title ~* #{search}")
     int countBySearch(String search);
 
-    @Select("select * from question where title ~* #{search} limit #{limit} offset #{offset}")
+    @Select("select * from question where title ~* #{search} or tag ~* #{search} limit #{limit} offset #{offset}")
     List<Question> selectBySearchWithLimit(String search, int offset, int limit);
 }

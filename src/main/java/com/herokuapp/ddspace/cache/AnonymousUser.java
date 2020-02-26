@@ -1,10 +1,10 @@
-package com.herokuapp.ddspace.dto;
+package com.herokuapp.ddspace.cache;
 
 import com.herokuapp.ddspace.model.User;
+import org.springframework.stereotype.Component;
 
+@Component
 public class AnonymousUser extends User {
-
-    public static AnonymousUser USER = new AnonymousUser();
 
     public AnonymousUser() {
         setName("匿名用户");

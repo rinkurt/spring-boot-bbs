@@ -1,6 +1,6 @@
 package com.herokuapp.ddspace.service;
 
-import com.herokuapp.ddspace.dto.AnonymousUser;
+import com.herokuapp.ddspace.cache.AnonymousUser;
 import com.herokuapp.ddspace.dto.CommentType;
 import com.herokuapp.ddspace.dto.NotificationDTO;
 import com.herokuapp.ddspace.dto.PaginationDTO;
@@ -11,29 +11,23 @@ import com.herokuapp.ddspace.mapper.NotificationMapper;
 import com.herokuapp.ddspace.mapper.QuestionMapper;
 import com.herokuapp.ddspace.mapper.UserMapper;
 import com.herokuapp.ddspace.model.*;
+import lombok.AllArgsConstructor;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 @Service
+@AllArgsConstructor
 public class NotificationService {
 
-    @Autowired(required = false)
     private UserMapper userMapper;
-
-    @Autowired(required = false)
     private QuestionMapper questionMapper;
-
-    @Autowired(required = false)
     private CommentMapper commentMapper;
-
-    @Autowired(required = false)
     private NotificationMapper notificationMapper;
+    private AnonymousUser anonymousUser;
 
     public ResultEnum insertByComment(Comment comment) {
         Notification notification = new Notification();
@@ -108,7 +102,7 @@ public class NotificationService {
             if (user != null) {
                 notificationDTO.setNotifierUser(user);
             } else {
-                notificationDTO.setNotifierUser(AnonymousUser.USER);
+                notificationDTO.setNotifierUser(anonymousUser);
             }
             int type = notificationDTO.getType();
             if (type == CommentType.QUESTION || type == CommentType.LIKE_QUESTION) {

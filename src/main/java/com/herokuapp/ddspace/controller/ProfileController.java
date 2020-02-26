@@ -6,6 +6,7 @@ import com.herokuapp.ddspace.dto.QuestionDTO;
 import com.herokuapp.ddspace.model.User;
 import com.herokuapp.ddspace.service.NotificationService;
 import com.herokuapp.ddspace.service.QuestionService;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,12 +17,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.servlet.http.HttpServletRequest;
 
 @Controller
+@AllArgsConstructor
 public class ProfileController {
 
-    @Autowired(required = false)
     private QuestionService questionService;
-
-    @Autowired(required = false)
     private NotificationService notificationService;
 
     @GetMapping("/profile/{action}")

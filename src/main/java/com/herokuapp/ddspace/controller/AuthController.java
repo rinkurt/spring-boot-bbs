@@ -6,6 +6,7 @@ import com.herokuapp.ddspace.mapper.UserMapper;
 import com.herokuapp.ddspace.model.User;
 import com.herokuapp.ddspace.provider.GithubProvider;
 import com.herokuapp.ddspace.service.UserService;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -18,15 +19,10 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.UUID;
 
 @Controller
+@AllArgsConstructor
 public class AuthController {
 
-    @Autowired
     private GithubProvider githubProvider;
-
-    @Autowired(required = false)
-    private UserMapper userMapper;
-
-    @Autowired(required = false)
     private UserService userService;
 
     @GetMapping("/callback")

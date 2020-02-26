@@ -30,9 +30,7 @@
             <hr>
             <span th:utext="${question.description}"></span><br>
             <hr>
-            <span class="label label-info" style="margin-right: 5px;" th:each="tag:${question.tag.split(',')}">
-                <span th:text="${tag.trim()}"></span>
-            </span>
+            <span class="label label-info" style="margin-right: 5px;" th:each="tag:${question.tag.split(',')}"><span th:text="${tag.trim()}"></span></span>
             <span class="a-grey" style="float: right;">
                 <a th:onclick="'javascript:incLike('+${question.id}+', 3)'" style="margin-right: 20px;">
                     <span th:class="${question.liked} ? 'active' : ''">

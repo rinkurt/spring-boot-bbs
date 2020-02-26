@@ -6,6 +6,7 @@ import com.herokuapp.ddspace.enums.ResultEnum;
 import com.herokuapp.ddspace.mapper.*;
 import com.herokuapp.ddspace.model.*;
 import com.herokuapp.ddspace.service.NotificationService;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,24 +17,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletRequest;
 
 @Controller
+@AllArgsConstructor
 public class LikeController {
 
-    @Autowired
     private NotificationService notificationService;
-
-    @Autowired(required = false)
     private QuestionExtMapper questionExtMapper;
-
-    @Autowired(required = false)
     private CommentExtMapper commentExtMapper;
-
-    @Autowired(required = false)
     private QuestionMapper questionMapper;
-
-    @Autowired(required = false)
     private CommentMapper commentMapper;
-
-    @Autowired(required = false)
     private LikesMapper likesMapper;
 
     @ResponseBody

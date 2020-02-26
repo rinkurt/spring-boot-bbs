@@ -9,6 +9,7 @@ import com.herokuapp.ddspace.model.Comment;
 import com.herokuapp.ddspace.model.User;
 import com.herokuapp.ddspace.service.CommentService;
 import com.herokuapp.ddspace.service.NotificationService;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,12 +20,10 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Controller
+@AllArgsConstructor
 public class CommentController {
 
-    @Autowired(required = false)
     private CommentService commentService;
-
-    @Autowired(required = false)
     private NotificationService notificationService;
 
     @ResponseBody

@@ -4,13 +4,17 @@ Spring Boot + Bootstrap
 
 参照[码匠社区](https://github.com/codedrinker/community)
 
-## 本地运行
+## 本地运行（IntelliJ IDEA）
 
-1. 设置 maven 环境变量（`File -> Settings -> Build -> Build Tools -> Maven -> Runner -> Environment Variables`）
+1. 设置 maven 环境变量
 
-    `JDBC_DATABASE_URL` （url 包含用户名和密码），格式如 `jdbc:postgresql://localhost:5432/postgres?useSSL=false&user=xxx&password=xxx`
+    File -> Settings -> Build, Execution, Deployment -> Build Tools -> Maven -> Runner -> Environment Variables，设置：
 
-2. 设置 Spring Boot 环境变量（`Edit Configurations -> Environment Variables`）
+    `JDBC_DATABASE_URL` ，格式如 `jdbc:postgresql://localhost:5432/postgres?useSSL=false&user=xxx&password=xxx`
+
+2. 设置 Spring Boot 环境变量
+
+    运行按钮左边下拉框 -> Edit Configurations -> Environment Variables，设置：
 
     ```
     JDBC_DATABASE_URL
@@ -19,13 +23,15 @@ Spring Boot + Bootstrap
     GITHUB_CALLBACK_URL
     ```
 
-3. 设置配置切换（`Edit Configurations -> Spring Boot -> Active profiles`）为 `dev`
+3. 设置配置切换
+
+    运行按钮左边下拉框 -> Edit Configurations -> Spring Boot -> Active profiles，设置为 `dev`
 
     多配置注意不要重复定义，公共部分写在主配置中。
 
 ## Heroku 运行
 
-在 Heroku 的配置（`App 管理页面 -> Settings -> Config Vars -> Reveal Config Vars`）中添加：
+在 Heroku 的配置（App 管理页面 -> Settings -> Config Vars -> Reveal Config Vars）中添加：
  
 ```
 GITHUB_CLIENT_ID

@@ -5,6 +5,7 @@ import com.herokuapp.ddspace.exception.CustomizeException;
 import com.herokuapp.ddspace.mapper.QuestionMapper;
 import com.herokuapp.ddspace.model.Question;
 import com.herokuapp.ddspace.model.User;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,9 +15,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import javax.servlet.http.HttpServletRequest;
 
 @Controller
+@AllArgsConstructor
 public class DeleteController {
 
-    @Autowired(required = false)
     private QuestionMapper questionMapper;
 
     @GetMapping("/delete/question/{id}")

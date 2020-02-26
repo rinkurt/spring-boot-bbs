@@ -1,6 +1,6 @@
 package com.herokuapp.ddspace.service;
 
-import com.herokuapp.ddspace.dto.AnonymousUser;
+import com.herokuapp.ddspace.cache.AnonymousUser;
 import com.herokuapp.ddspace.dto.CommentType;
 import com.herokuapp.ddspace.dto.PaginationDTO;
 import com.herokuapp.ddspace.dto.QuestionDTO;
@@ -11,30 +11,23 @@ import com.herokuapp.ddspace.mapper.QuestionExtMapper;
 import com.herokuapp.ddspace.mapper.QuestionMapper;
 import com.herokuapp.ddspace.mapper.UserMapper;
 import com.herokuapp.ddspace.model.*;
+import lombok.AllArgsConstructor;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 @Service
+@AllArgsConstructor
 public class QuestionService {
 
-    @Autowired(required = false)
     private QuestionMapper questionMapper;
-
-    @Autowired(required = false)
     private QuestionExtMapper questionExtMapper;
-
-    @Autowired(required = false)
     private UserMapper userMapper;
-
-    @Autowired(required = false)
     private LikesMapper likesMapper;
-
+    private AnonymousUser anonymousUser;
 
     public PaginationDTO<QuestionDTO> listByExample(QuestionExample example, String search, Integer page, Integer size) {
         PaginationDTO<QuestionDTO> paginationDTO = new PaginationDTO<>();
@@ -71,7 +64,7 @@ public class QuestionService {
             if (user != null) {
                 questionDto.setUser(user);
             } else {
-                questionDto.setUser(AnonymousUser.USER);
+                questionDto.setUser(anonymousUser);
             }
             questionDTOList.add(questionDto);
         }

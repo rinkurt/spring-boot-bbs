@@ -3,14 +3,16 @@ package com.herokuapp.ddspace.service;
 import com.herokuapp.ddspace.mapper.UserMapper;
 import com.herokuapp.ddspace.model.User;
 import com.herokuapp.ddspace.model.UserExample;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@AllArgsConstructor
 public class UserService {
-    @Autowired(required = false)
+
     private UserMapper userMapper;
 
     public void createOrUpdate(User user) {

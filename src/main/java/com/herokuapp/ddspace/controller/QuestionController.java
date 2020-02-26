@@ -8,6 +8,7 @@ import com.herokuapp.ddspace.model.Question;
 import com.herokuapp.ddspace.model.User;
 import com.herokuapp.ddspace.service.CommentService;
 import com.herokuapp.ddspace.service.QuestionService;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,15 +19,11 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Controller
+@AllArgsConstructor
 public class QuestionController {
 
-    @Autowired
     private QuestionService questionService;
-
-    @Autowired(required = false)
     private QuestionExtMapper questionExtMapper;
-
-    @Autowired
     private CommentService commentService;
 
     @GetMapping("/question/{id}")

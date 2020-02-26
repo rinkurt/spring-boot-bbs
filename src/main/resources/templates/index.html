@@ -81,7 +81,14 @@
 
         </div>
         <div class="col-lg-3 col-md-12 col-sm-12">
-            <h3>热门话题</h3>
+            <div style="margin-bottom: 15px;"><h3>热门话题</h3></div>
+            <div th:each="hotTag : ${hotTagList}" style="margin: 5px 0;">
+                <div><a th:href="@{/(search=${hotTag.tag})}" th:text="${hotTag.tag}"></a></div>
+                <div class="text-desc">
+                    <span th:text="${hotTag.questionCount}"></span>个问题,
+                    <span th:text="${hotTag.commentCount}"></span>条评论
+                </div>
+            </div>
         </div>
     </div>
 </div>

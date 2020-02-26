@@ -5,6 +5,7 @@ import com.herokuapp.ddspace.exception.CustomizeException;
 import com.herokuapp.ddspace.mapper.UserMapper;
 import com.herokuapp.ddspace.model.User;
 import com.herokuapp.ddspace.model.UserExample;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -20,9 +21,9 @@ import java.util.List;
 import java.util.UUID;
 
 @Controller
+@AllArgsConstructor
 public class LoginController {
 
-    @Autowired(required = false)
     private UserMapper userMapper;
 
     @GetMapping("/login")
