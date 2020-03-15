@@ -29,6 +29,8 @@ public class QuestionService {
     private LikesMapper likesMapper;
     private AnonymousUser anonymousUser;
 
+    private LikeService likeService;
+
     public PaginationDTO<QuestionDTO> listByExample(QuestionExample example, String search, Integer page, Integer size) {
         PaginationDTO<QuestionDTO> paginationDTO = new PaginationDTO<>();
         int totalCount;
@@ -95,15 +97,12 @@ public class QuestionService {
         QuestionDTO questionDto = new QuestionDTO();
         BeanUtils.copyProperties(question, questionDto);
         questionDto.setUser(userMapper.selectByPrimaryKey(questionDto.getCreator()));
-        if (sessionUser != null) {
-            LikesKey likesKey = new LikesKey();
-            likesKey.setType(CommentType.LIKE_QUESTION);
-            likesKey.setParentId(id);
-            likesKey.setUserId(sessionUser.getId());
-            Likes likes = likesMapper.selectByPrimaryKey(likesKey);
-            if (likes != null) {
-                questionDto.setLiked(true);
-            }
+        questionDto.incLike(likeService.getLikeCountFromRedis(id, CommentType.LIKE_QUESTION));
+
+        // Set liked
+        if (sessionUser != null && questionDto.getLikeCount() > 0 &&
+                likeService.isContained(id, CommentType.LIKE_QUESTION, sessionUser.getId())) {
+            questionDto.setLiked(true);
         }
         return questionDto;
     }

@@ -32,8 +32,8 @@
             <hr>
             <span class="label label-info" style="margin-right: 5px;" th:each="tag:${question.tag.split(',')}"><span th:text="${tag.trim()}"></span></span>
             <span class="a-grey" style="float: right;">
-                <a th:onclick="'javascript:incLike('+${question.id}+', 3)'" style="margin-right: 20px;">
-                    <span th:class="${question.liked} ? 'active' : ''">
+                <a  style="margin-right: 20px;">
+                    <span th:class="${question.liked} ? 'active' : ''" th:onclick="'javascript:incLike(this, '+${question.id}+', 3, '+${question.creator}+')'">
                         <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>
                     <span th:text="${question.likeCount}"></span>
                     </span>
@@ -66,7 +66,8 @@
                     <div class="text-name a-grey" style="margin-top: 5px; text-decoration: none;">
                         <!-- 点赞 -->
                         <a>
-                            <span th:class="${comment.liked} ? 'active' : ''" th:onclick="'javascript:incLike('+${comment.id}+', 4)'">
+                            <span th:class="${comment.liked} ? 'active' : ''" th:onclick="'javascript:incLike(this, '+${comment.id}+', 4, '+${comment.userId}+')'"
+                                    th:id="'like_button_comment_'+${comment.id}">
                                 <span class="glyphicon glyphicon-thumbs-up"></span>
                                 <span style="font-size: 12px;" th:text="${comment.likeCount}" th:id="'like_comment_' + ${comment.id}"></span>
                             </span>

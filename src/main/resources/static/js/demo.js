@@ -47,21 +47,28 @@ function postSubComment(parentId) {
     post(parentId, 2, contentContainer);
 }
 
-function incLike(id, type) {
+function incLike(e, id, type, receiveId) {
+    let liked = e.classList.contains("active");
     $.ajax({
         type: "POST",
         url: "/like",
         contentType: "application/json",
         data: JSON.stringify({
             "id": id,
-            "type": type
+            "type": type,
+            "receiveId": receiveId,
+            "liked": liked
         }),
         success: function (response) {
+            let element = document.getElementById("like_comment_" + id);
+            oldCount = parseInt(element.innerHTML);
             if (response.code === 200) {
                 // Success
-                window.location.reload();
-            } else {
-                alert(response.message);
+                e.classList.toggle("active");
+                element.innerHTML = oldCount + 1;
+            } else if (response.code === 202) {
+                e.classList.toggle("active");
+                element.innerHTML = oldCount - 1;
             }
         },
         dataType: "json"

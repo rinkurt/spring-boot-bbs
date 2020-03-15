@@ -7,6 +7,7 @@ import com.herokuapp.ddspace.model.Question;
 import com.herokuapp.ddspace.model.QuestionExample;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -15,20 +16,22 @@ import java.util.*;
 
 @Slf4j
 @Component
-@AllArgsConstructor
 public class HotTagSchedule {
 
     private static final int queueSize = 5;
     private static final Comparator<HotTagDTO> comparator = Comparator.comparingInt(HotTagDTO::getPriority);
 
-    // Autowired
+    @Autowired
     private QuestionMapper questionMapper;
+
+    @Autowired
     private HotTagCache hotTagCache;
 
 
     public int calcPriority(Question question) {
         return question.getViewCount() + 2 * question.getLikeCount() + 3 * question.getCommentCount() + 20;
     }
+
 
     @Scheduled(fixedRate = 18000000) // 5 hours
     public void getHotTags() {

@@ -10,4 +10,8 @@ public class QuestionDTO extends Question {
     private User user;
     private boolean liked = false;
 
+    public void incLike(int num) {
+        this.setLikeCount(this.getLikeCount() + num);
+    }
+
 }

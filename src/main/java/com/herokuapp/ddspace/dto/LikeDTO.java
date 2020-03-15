@@ -6,5 +6,6 @@ import lombok.Data;
 public class LikeDTO {
     private Integer id;
     private int type;
-    private Integer userId;
+    private Integer receiveId;
+    private Boolean liked;
 }

@@ -5,10 +5,10 @@ import com.herokuapp.ddspace.dto.LikeDTO;
 import com.herokuapp.ddspace.enums.ResultEnum;
 import com.herokuapp.ddspace.mapper.*;
 import com.herokuapp.ddspace.model.*;
+import com.herokuapp.ddspace.service.LikeService;
 import com.herokuapp.ddspace.service.NotificationService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,16 +20,16 @@ import javax.servlet.http.HttpServletRequest;
 @AllArgsConstructor
 public class LikeController {
 
-    private NotificationService notificationService;
     private QuestionExtMapper questionExtMapper;
     private CommentExtMapper commentExtMapper;
-    private QuestionMapper questionMapper;
-    private CommentMapper commentMapper;
     private LikesMapper likesMapper;
+
+    private LikeService likeService;
 
     @ResponseBody
     @PostMapping("/like")
     public Object like(@RequestBody LikeDTO likeDTO, HttpServletRequest request) {
+
         boolean cancel = false;
 
         User user = (User) request.getSession().getAttribute("user");
@@ -45,25 +45,14 @@ public class LikeController {
         }
 
         // 不能给自己点赞
-        if (likeDTO.getType() == CommentType.LIKE_QUESTION) {
-            Question question = questionMapper.selectByPrimaryKey(likeDTO.getId());
-            if (question.getCreator().equals(user.getId())) {
-                return ResultEnum.SUCCESS;
-            }
-        } else if (likeDTO.getType() == CommentType.LIKE_COMMENT) {
-            Comment comment = commentMapper.selectByPrimaryKey(likeDTO.getId());
-            if (comment.getUserId().equals(user.getId())) {
-                return ResultEnum.SUCCESS;
-            }
-        } else {
-            return ResultEnum.NULL_COMMENT_TYPE;
+        if (likeDTO.getReceiveId().equals(user.getId())) {
+            return ResultEnum.FAIL;
         }
 
         LikesKey likesKey = new LikesKey();
         likesKey.setUserId(user.getId());
         likesKey.setParentId(likeDTO.getId());
         likesKey.setType(likeDTO.getType());
-        Likes dbLike = likesMapper.selectByPrimaryKey(likesKey);
 
         int num;
 
@@ -71,35 +60,45 @@ public class LikeController {
         like.setGmtCreate(System.currentTimeMillis());
         BeanUtils.copyProperties(likesKey, like);
 
-        if (dbLike == null) {
+        if (!likeDTO.getLiked()) {
             // 点赞
-            likesMapper.insertSelective(like);
+            //likesMapper.insertSelective(like);
+            likeService.like(likeDTO.getId(), likeDTO.getType(), user.getId());
             num = 1;
         } else {
             // 取消
-            likesMapper.deleteByPrimaryKey(likesKey);
+            //likesMapper.deleteByPrimaryKey(likesKey);
+            likeService.like(likeDTO.getId(), likeDTO.getType(), -user.getId());
             num = -1;
-            cancel = true;
         }
 
-        likeDTO.setUserId(user.getId());
-        if (likeDTO.getType() == CommentType.LIKE_QUESTION) {
-            // 给问题点赞
-            if (questionExtMapper.incLike(likeDTO.getId(), num) == 0) {
-                return ResultEnum.QUESTION_NOT_FOUND;
-            }
-        } else if (likeDTO.getType() == CommentType.LIKE_COMMENT) {
-            // 给评论点赞
-            if (commentExtMapper.incLike(likeDTO.getId(), num) == 0) {
-                return ResultEnum.COMMENT_NOT_FOUND;
-            }
-        }
+//        likeDTO.setReceiveId(user.getId());
+//        if (likeDTO.getType() == CommentType.LIKE_QUESTION) {
+//            // 给问题点赞
+//            if (questionExtMapper.incLike(likeDTO.getId(), num) == 0) {
+//                return ResultEnum.QUESTION_NOT_FOUND;
+//            }
+//
+//        } else if (likeDTO.getType() == CommentType.LIKE_COMMENT) {
+//            // 给评论点赞
+//            if (commentExtMapper.incLike(likeDTO.getId(), num) == 0) {
+//                return ResultEnum.COMMENT_NOT_FOUND;
+//            }
+//        }
 
         // Notification
-        if (!cancel) {
-            return notificationService.insertByLike(like);
+//        ResultEnum resultEnum;
+//        if (!cancel) {
+//            resultEnum = notificationService.insertByLike(like);
+//        } else {
+//            resultEnum = notificationService.deleteByLike(like);
+//        }
+
+        if (!likeDTO.getLiked()) {
+            return ResultEnum.SUCCESS;
         } else {
-            return notificationService.deleteByLike(like);
+            return ResultEnum.CANCELED;
         }
+
     }
 }

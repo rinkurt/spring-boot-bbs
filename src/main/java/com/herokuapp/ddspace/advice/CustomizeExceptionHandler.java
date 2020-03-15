@@ -16,6 +16,7 @@ public class CustomizeExceptionHandler {
             model.addAttribute("message", e.getMessage());
         } else {
             model.addAttribute("message", ResultEnum.UNKNOWN.getMessage());
+            e.printStackTrace();
         }
         return new ModelAndView("error");
     }

@@ -17,6 +17,8 @@ public enum ResultEnum {
     REPETITIVE_LOGIN(2010, "不能重复登录"),
     PERMISSION_ERROR(2011, "越权访问"),
     SUCCESS(200, "成功"),
+    FAIL(201, "失败"),
+    CANCELED(202, "取消成功"),
     CLIENT_ERROR(400, "客户端错误"),
     NOT_FOUND(404, "404 NOT FOUND"),
     SERVER_ERROR(500, "服务端错误");
@@ -29,6 +31,7 @@ public enum ResultEnum {
         return message;
     }
 
+
     Integer code;
     String message;
 
@@ -36,5 +39,7 @@ public enum ResultEnum {
         this.code = code;
         this.message = message;
     }
+
+
 
 }

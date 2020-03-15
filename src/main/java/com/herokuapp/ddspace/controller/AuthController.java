@@ -49,11 +49,8 @@ public class AuthController {
             user.setBio(githubUser.getBio());
             userService.createOrUpdate(user);
             response.addCookie(new Cookie("token", token));
-            return "redirect:/";
-        } else {
-            // 登录失败
-            return "redirect:/";
         }
+        return "redirect:/";
     }
 
     @GetMapping("/logout")

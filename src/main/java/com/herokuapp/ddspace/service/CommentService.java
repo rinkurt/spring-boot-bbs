@@ -21,11 +21,14 @@ public class CommentService {
 
     CommentMapper commentMapper;
     CommentExtMapper commentExtMapper;
+    CommentCacheService commentCacheService;
     UserMapper userMapper;
     QuestionMapper questionMapper;
     QuestionExtMapper questionExtMapper;
     LikesMapper likesMapper;
     AnonymousUser anonymousUser;
+
+    LikeService likeService;
 
     @Transactional
     public ResultEnum insert(Comment comment) {
@@ -58,19 +61,17 @@ public class CommentService {
         return ResultEnum.SUCCESS;
     }
 
+
     public List<CommentDTO> findByParent(Integer parentId, int type, User sessionUser) {
-        CommentExample commentExample = new CommentExample();
-        commentExample.createCriteria()
-                .andParentIdEqualTo(parentId)
-                .andTypeEqualTo(type);
-        commentExample.setOrderByClause("gmt_create desc");
-        List<Comment> comments = commentMapper.selectByExample(commentExample);
+
+        List<Comment> comments = commentCacheService.selectByParentAndType(parentId, type);
         HashMap<Integer, User> userMap = new HashMap<>();
         List<CommentDTO> commentDTOList = new ArrayList<>();
         for (Comment comment : comments) {
             Integer userId = comment.getUserId();
             CommentDTO commentDTO = new CommentDTO();
             BeanUtils.copyProperties(comment, commentDTO);
+            commentDTO.incLike(likeService.getLikeCountFromRedis(commentDTO.getId(), CommentType.LIKE_COMMENT));
             // Set user
             if (userMap.containsKey(userId)) {
                 commentDTO.setUser(userMap.get(userId));
@@ -84,15 +85,9 @@ public class CommentService {
                 }
             }
             // Set liked
-            if (sessionUser != null) {
-                LikesKey likesKey = new LikesKey();
-                likesKey.setType(CommentType.LIKE_COMMENT);
-                likesKey.setParentId(comment.getId());
-                likesKey.setUserId(sessionUser.getId());
-                Likes likes = likesMapper.selectByPrimaryKey(likesKey);
-                if (likes != null) {
-                    commentDTO.setLiked(true);
-                }
+            if (sessionUser != null && commentDTO.getLikeCount() > 0 &&
+                    likeService.isContained(commentDTO.getId(), CommentType.LIKE_COMMENT, sessionUser.getId())) {
+                commentDTO.setLiked(true);
             }
             commentDTOList.add(commentDTO);
         }

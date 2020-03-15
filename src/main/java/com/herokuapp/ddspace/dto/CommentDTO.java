@@ -8,4 +8,8 @@ import lombok.Data;
 public class CommentDTO extends Comment {
     private User user;
     private boolean liked = false;
+
+    public void incLike(int num) {
+        this.setLikeCount(this.getLikeCount() + num);
+    }
 }
