@@ -72,27 +72,6 @@ public class LikeController {
             num = -1;
         }
 
-//        likeDTO.setReceiveId(user.getId());
-//        if (likeDTO.getType() == CommentType.LIKE_QUESTION) {
-//            // 给问题点赞
-//            if (questionExtMapper.incLike(likeDTO.getId(), num) == 0) {
-//                return ResultEnum.QUESTION_NOT_FOUND;
-//            }
-//
-//        } else if (likeDTO.getType() == CommentType.LIKE_COMMENT) {
-//            // 给评论点赞
-//            if (commentExtMapper.incLike(likeDTO.getId(), num) == 0) {
-//                return ResultEnum.COMMENT_NOT_FOUND;
-//            }
-//        }
-
-        // Notification
-//        ResultEnum resultEnum;
-//        if (!cancel) {
-//            resultEnum = notificationService.insertByLike(like);
-//        } else {
-//            resultEnum = notificationService.deleteByLike(like);
-//        }
 
         if (!likeDTO.getLiked()) {
             return ResultEnum.SUCCESS;

@@ -29,6 +29,7 @@ public class CommentService {
     AnonymousUser anonymousUser;
 
     LikeService likeService;
+    UserService userService;
 
     @Transactional
     public ResultEnum insert(Comment comment) {
@@ -71,12 +72,12 @@ public class CommentService {
             Integer userId = comment.getUserId();
             CommentDTO commentDTO = new CommentDTO();
             BeanUtils.copyProperties(comment, commentDTO);
-            commentDTO.incLike(likeService.getLikeCountFromRedis(commentDTO.getId(), CommentType.LIKE_COMMENT));
+            commentDTO.setLikeCount(Long.valueOf(likeService.getLikeCount(commentDTO.getId(), CommentType.LIKE_COMMENT)));
             // Set user
             if (userMap.containsKey(userId)) {
                 commentDTO.setUser(userMap.get(userId));
             } else {
-                User user = userMapper.selectByPrimaryKey(userId);
+                User user = userService.getById(userId);
                 if (user == null) {
                     commentDTO.setUser(anonymousUser);
                 } else {

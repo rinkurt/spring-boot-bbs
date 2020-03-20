@@ -2,13 +2,10 @@ package com.herokuapp.ddspace.controller;
 
 import com.herokuapp.ddspace.dto.AccessTokenDTO;
 import com.herokuapp.ddspace.dto.GithubUser;
-import com.herokuapp.ddspace.mapper.UserMapper;
 import com.herokuapp.ddspace.model.User;
 import com.herokuapp.ddspace.provider.GithubProvider;
 import com.herokuapp.ddspace.service.UserService;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -38,7 +35,7 @@ public class AuthController {
         accessTokenDTO.setState(state);
         String accessToken = githubProvider.getAccessToken(accessTokenDTO);
         GithubUser githubUser = githubProvider.getUser(accessToken);
-        if (githubUser != null) {
+        if (githubUser != null && githubUser.getId() != null) {
             // 登录成功，写 cookie 和 session
             User user = new User();
             String token = UUID.randomUUID().toString();
@@ -47,7 +44,7 @@ public class AuthController {
             user.setName(githubUser.getName());
             user.setAvatarUrl(githubUser.getAvatarUrl());
             user.setBio(githubUser.getBio());
-            userService.createOrUpdate(user);
+            userService.createOrUpdateByAccountId(user);
             response.addCookie(new Cookie("token", token));
         }
         return "redirect:/";

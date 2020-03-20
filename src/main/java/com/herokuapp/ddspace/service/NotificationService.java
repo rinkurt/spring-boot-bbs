@@ -28,6 +28,7 @@ public class NotificationService {
     private CommentMapper commentMapper;
     private NotificationMapper notificationMapper;
     private AnonymousUser anonymousUser;
+    private UserService userService;
 
     public ResultEnum insertByComment(Comment comment) {
         Notification notification = new Notification();
@@ -98,7 +99,7 @@ public class NotificationService {
         for (Notification notification : notifications) {
             NotificationDTO notificationDTO = new NotificationDTO();
             BeanUtils.copyProperties(notification, notificationDTO);
-            User user = userMapper.selectByPrimaryKey(notification.getNotifier());
+            User user = userService.getById(notification.getNotifier());
             if (user != null) {
                 notificationDTO.setNotifierUser(user);
             } else {

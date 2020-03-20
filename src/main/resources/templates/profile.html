@@ -57,17 +57,46 @@
                             <a href="#" th:text="${notification.notifierUser.name}"></a>
                             <span th:if="${notification.type == 1}">回复了问题</span>
                             <span th:if="${notification.type == 2}">回复了评论</span>
-                            <span th:if="${notification.type == 3}">赞了问题</span>
-                            <span th:if="${notification.type == 4}">赞了评论</span>
                             <a th:href="'/notification/'+${notification.id}" th:text="${notification.title}"></a>
                             <span class="badge" th:if="${notification.status == 0}">未读</span>
+                        </span>
+                        <br>
+                        <span class="text-desc">
+                            <span th:text="${#dates.format(notification.gmtCreate, 'yyyy-MM-dd HH:mm')}"></span>
                         </span>
                     </div>
                 </div>
             </div>
 
 
-            <nav aria-label="Page navigation" class="navbar-right" style="margin-right: 20px;">
+            <!-- 收到的赞 -->
+            <div th:if="${section} eq 'likes'" style="margin-bottom: 20px;">
+                <div class="media" th:each="likeNotify : ${likeList}">
+                    <div class="media-left">
+                        <a href="#">
+                        <img class="media-object media-avatar img-rounded"
+                             th:if="${likeNotify.senders.size() > 0}"
+                             th:src="${likeNotify.senders[0].avatarUrl}">
+                        </a>
+                    </div>
+                    <div class="media-body">
+                        <span class="media-heading">
+                            <span th:if="${likeNotify.senders.size() > 0}"><a
+                                    href="#" th:text="${likeNotify.senders[0].name}"></a></span><span
+                                th:if="${likeNotify.senders.size() > 1}">、<a
+                                href="#" th:text="${likeNotify.senders[1].name}"></a></span>
+                            等 <span th:text="${likeNotify.count}"></span> 人赞了<span
+                                th:if="${likeNotify.type == 3}">问题</span><span
+                                th:if="${likeNotify.type == 4}">评论</span>
+                            <a th:href="@{ '/jump/' + ${likeNotify.parentId} + '?type=' + ${likeNotify.type} }" th:text="${likeNotify.content}"></a>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- 分页器 -->
+            <nav th:if="${section} != 'likes'" aria-label="Page navigation" class="navbar-right" style="margin-right: 20px;">
                 <ul class="pagination">
                     <li>
                         <a th:if="${pagination.showFirstPage}" th:href="@{'/profile/'+${section}(page=${1})}"
@@ -113,6 +142,10 @@
                    th:class="${section == 'replies'}? 'list-group-item active' : 'list-group-item'">
                     最新回复
                     <span class="badge" th:text="${session.notificationCount}"></span>
+                </a>
+                <a href="/profile/likes"
+                   th:class="${section == 'likes'}? 'list-group-item active' : 'list-group-item'">
+                    收到的赞
                 </a>
             </div>
         </div>

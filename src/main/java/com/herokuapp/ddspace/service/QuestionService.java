@@ -26,10 +26,10 @@ public class QuestionService {
     private QuestionMapper questionMapper;
     private QuestionExtMapper questionExtMapper;
     private UserMapper userMapper;
-    private LikesMapper likesMapper;
     private AnonymousUser anonymousUser;
 
     private LikeService likeService;
+    private UserService userService;
 
     public PaginationDTO<QuestionDTO> listByExample(QuestionExample example, String search, Integer page, Integer size) {
         PaginationDTO<QuestionDTO> paginationDTO = new PaginationDTO<>();
@@ -62,7 +62,7 @@ public class QuestionService {
         for (Question question : questions) {
             QuestionDTO questionDto = new QuestionDTO();
             BeanUtils.copyProperties(question, questionDto);
-            User user = userMapper.selectByPrimaryKey(question.getCreator());
+            User user = userService.getById(question.getCreator());
             if (user != null) {
                 questionDto.setUser(user);
             } else {
@@ -96,8 +96,8 @@ public class QuestionService {
         }
         QuestionDTO questionDto = new QuestionDTO();
         BeanUtils.copyProperties(question, questionDto);
-        questionDto.setUser(userMapper.selectByPrimaryKey(questionDto.getCreator()));
-        questionDto.incLike(likeService.getLikeCountFromRedis(id, CommentType.LIKE_QUESTION));
+        questionDto.setUser(userService.getById(questionDto.getCreator()));
+        questionDto.setLikeCount(likeService.getLikeCount(id, CommentType.LIKE_QUESTION));
 
         // Set liked
         if (sessionUser != null && questionDto.getLikeCount() > 0 &&
