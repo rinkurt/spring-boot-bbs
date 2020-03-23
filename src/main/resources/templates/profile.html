@@ -84,10 +84,11 @@
                             <span th:if="${likeNotify.senders.size() > 0}"><a
                                     href="#" th:text="${likeNotify.senders[0].name}"></a></span><span
                                 th:if="${likeNotify.senders.size() > 1}">、<a
-                                href="#" th:text="${likeNotify.senders[1].name}"></a></span>
-                            等 <span th:text="${likeNotify.count}"></span> 人赞了<span
+                                    href="#" th:text="${likeNotify.senders[1].name}"></a></span>
+                            <a style="color: black;" th:href="@{'/profile/likes/'+${likeNotify.parentId}+'?type='+${likeNotify.type}}">等 <span
+                                    th:text="${likeNotify.count}"></span> 人赞了<span
                                 th:if="${likeNotify.type == 3}">问题</span><span
-                                th:if="${likeNotify.type == 4}">评论</span>
+                                    th:if="${likeNotify.type == 4}">评论</span></a>
                             <a th:href="@{ '/jump/' + ${likeNotify.parentId} + '?type=' + ${likeNotify.type} }" th:text="${likeNotify.content}"></a>
                         </span>
                     </div>
@@ -95,8 +96,26 @@
             </div>
 
 
+            <!-- 点赞列表 -->
+            <div th:if="${section} eq 'likeList'" style="margin-bottom: 20px;">
+                <div class="media" th:each="user : ${likeUserList}">
+                    <div class="media-left">
+                        <a href="#">
+                            <img class="media-object media-avatar img-rounded"
+                                 th:src="${user.avatarUrl}">
+                        </a>
+                    </div>
+                    <div class="media-body">
+                        <span class="media-heading">
+                            <a href="#" th:text="${user.name}"></a>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+
             <!-- 分页器 -->
-            <nav th:if="${section} != 'likes'" aria-label="Page navigation" class="navbar-right" style="margin-right: 20px;">
+            <nav th:if="${section} != 'likes' and ${section} != 'likeList'" aria-label="Page navigation" class="navbar-right" style="margin-right: 20px;">
                 <ul class="pagination">
                     <li>
                         <a th:if="${pagination.showFirstPage}" th:href="@{'/profile/'+${section}(page=${1})}"
@@ -144,7 +163,7 @@
                     <span class="badge" th:text="${session.notificationCount}"></span>
                 </a>
                 <a href="/profile/likes"
-                   th:class="${section == 'likes'}? 'list-group-item active' : 'list-group-item'">
+                   th:class="${section == 'likes' || section == 'likeList'}? 'list-group-item active' : 'list-group-item'">
                     收到的赞
                 </a>
             </div>

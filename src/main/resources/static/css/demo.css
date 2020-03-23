@@ -42,6 +42,16 @@ body {
     cursor: pointer;
 }
 
+.a-black a {
+    color: black;
+    text-decoration: none;
+}
+
+.a-black a:hover {
+    color: #2aabd2;
+    cursor: pointer;
+}
+
 .active {
     color: #2aabd2;
 }

@@ -16,6 +16,7 @@ public enum ResultEnum {
     NOTIFICATION_NOT_FOUND(2009, "通知不存在"),
     REPETITIVE_LOGIN(2010, "不能重复登录"),
     PERMISSION_ERROR(2011, "越权访问"),
+    LOGIN_ERROR(2012, "登录失败"),
     SUCCESS(200, "成功"),
     FAIL(201, "失败"),
     CANCELED(202, "取消成功"),

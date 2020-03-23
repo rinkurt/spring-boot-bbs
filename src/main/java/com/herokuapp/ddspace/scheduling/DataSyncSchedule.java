@@ -47,7 +47,7 @@ public class DataSyncSchedule {
     LikeService likeService;
 
     //@Scheduled(fixedRate = 3600000) // 1 hour
-    @Scheduled(fixedRate = 10000)
+    @Scheduled(fixedRate = 60000)
     public void sync() {
         Set<String> writeKeys = integerRedisTemplate.keys("like:write*");
         if (writeKeys != null && writeKeys.size() > 0) {

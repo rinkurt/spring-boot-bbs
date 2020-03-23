@@ -2,11 +2,13 @@ package com.herokuapp.ddspace.controller;
 
 import com.herokuapp.ddspace.dto.AccessTokenDTO;
 import com.herokuapp.ddspace.dto.GithubUser;
+import com.herokuapp.ddspace.enums.ResultEnum;
 import com.herokuapp.ddspace.model.User;
 import com.herokuapp.ddspace.provider.GithubProvider;
 import com.herokuapp.ddspace.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -26,7 +28,8 @@ public class AuthController {
     public String callback(@RequestParam(name="code") String code,
                            @RequestParam(name="state") String state,
                            HttpServletRequest request,
-                           HttpServletResponse response) {
+                           HttpServletResponse response,
+                           Model model) {
         AccessTokenDTO accessTokenDTO = new AccessTokenDTO();
         accessTokenDTO.setClient_id(System.getenv("GITHUB_CLIENT_ID"));
         accessTokenDTO.setClient_secret(System.getenv("GITHUB_CLIENT_SECRET"));
@@ -46,8 +49,11 @@ public class AuthController {
             user.setBio(githubUser.getBio());
             userService.createOrUpdateByAccountId(user);
             response.addCookie(new Cookie("token", token));
+            return "redirect:/";
+        } else {
+            model.addAttribute("message", ResultEnum.LOGIN_ERROR.getMessage());
+            return "error";
         }
-        return "redirect:/";
     }
 
     @GetMapping("/logout")

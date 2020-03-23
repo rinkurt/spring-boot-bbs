@@ -46,33 +46,28 @@ public class LikeService {
      * 点赞，传入负的 userId 表示取消
      */
     public ResultEnum like(Integer parentId, Integer type, Integer userId) {
+        String countKey = "like-count:" + type + ":" + parentId;
+        String writeKey = "like:write:" + type + ":" + parentId;
         // 对于即将写入的key，取消过期时间，表示“脏位”
-        Boolean persistSuccess = integerRedisTemplate.persist("like-count:" + type + ":" + parentId);
-        if (persistSuccess == null || !persistSuccess) {
-            Integer result = integerRedisTemplate.opsForValue().get("like-count:" + type + ":" + parentId);
-            if (result == null) {
-                if (type == CommentType.LIKE_QUESTION) {
-                    Question question = questionMapper.selectByPrimaryKey(parentId);
-                    result = question.getLikeCount();
-                } else if (type == CommentType.LIKE_COMMENT) {
-                    Comment comment = commentMapper.selectByPrimaryKey(parentId);
-                    result = Math.toIntExact(comment.getLikeCount());
-                } else {
-                    result = 0;
-                }
-                integerRedisTemplate.opsForValue().set("like-count:" + type + ":" + parentId, result);
+        integerRedisTemplate.persist(countKey);
+        Boolean hasKey = integerRedisTemplate.hasKey(countKey);
+        if (hasKey != null && !hasKey) {
+            int result = 0;
+            if (type == CommentType.LIKE_QUESTION) {
+                Question question = questionMapper.selectByPrimaryKey(parentId);
+                result = question.getLikeCount();
+            } else if (type == CommentType.LIKE_COMMENT) {
+                Comment comment = commentMapper.selectByPrimaryKey(parentId);
+                result = Math.toIntExact(comment.getLikeCount());
             }
+            integerRedisTemplate.opsForValue().set(countKey, result);
         }
-        integerRedisTemplate.expire("like-count:" + type + ":" + parentId, expireTime, TimeUnit.SECONDS);
+        long num = userId > 0 ? 1 : -1;
         integerRedisTemplate.multi();
         // 移除相反id，添加当前id（可正可负）
-        integerRedisTemplate.opsForSet().remove("like:write:" + type + ":" + parentId, -userId);
-        integerRedisTemplate.opsForSet().add("like:write:" + type + ":" + parentId, userId);
-        if (userId > 0) {
-            integerRedisTemplate.opsForValue().increment("like-count:" + type + ":" + parentId);
-        } else {
-            integerRedisTemplate.opsForValue().decrement("like-count:" + type + ":" + parentId);
-        }
+        integerRedisTemplate.opsForSet().remove(writeKey, -userId);
+        integerRedisTemplate.opsForSet().add(writeKey, userId);
+        integerRedisTemplate.opsForValue().increment(countKey, num);
         integerRedisTemplate.exec();
         return ResultEnum.SUCCESS;
     }
@@ -132,9 +127,9 @@ public class LikeService {
     }
 
 
-    public Set<User> getLikeUserSet(Integer parentId, Integer type) {
+    public List<User> getLikeUserList(Integer parentId, Integer type) {
         Set<Integer> likeIdSet = getLikeIdSet(parentId, type);
-        Set<User> result = new HashSet<>();
+        List<User> result = new ArrayList<>();
         for (Integer userId : likeIdSet) {
             result.add(userService.getById(userId));
         }
@@ -182,7 +177,6 @@ public class LikeService {
         Set<Integer> likeSet = getLikeIdSet(parentId, type);
         return likeSet.contains(userId);
     }
-
 
 
     // TODO: 分布式锁

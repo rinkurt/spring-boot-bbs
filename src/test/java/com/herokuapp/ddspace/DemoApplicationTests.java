@@ -23,9 +23,17 @@ class DemoApplicationTests {
 
     @Test
     void testRedis() {
-        integerRedisTemplate.opsForSet().add("aa", 1);
-        integerRedisTemplate.opsForSet().add("aa", 2);
-        integerRedisTemplate.opsForSet().add("aa", 3);
+        Boolean aaa1 = integerRedisTemplate.hasKey("aaa");
+        Long aaa = integerRedisTemplate.getExpire("aaa");
+        Boolean aaa2 = integerRedisTemplate.persist("aaa");
+        System.out.println(aaa1);
+        System.out.println(aaa);
+        System.out.println(aaa2);
+
+        System.out.println(integerRedisTemplate.hasKey("bbb"));
+        System.out.println(integerRedisTemplate.getExpire("bbb"));
+        System.out.println(integerRedisTemplate.persist("bbb"));
+
     }
 
     @Test

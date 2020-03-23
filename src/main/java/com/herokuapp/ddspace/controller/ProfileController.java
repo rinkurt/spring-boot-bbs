@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.Set;
 
 @Controller
 @AllArgsConstructor
@@ -56,6 +57,17 @@ public class ProfileController {
             model.addAttribute("sectionName", "null");
             model.addAttribute("pagination", null);
         }
+        return "profile";
+    }
+
+    @GetMapping("/profile/likes/{id}")
+    public String listLikeUser(@PathVariable("id") Integer id,
+                               @RequestParam("type") Integer type,
+                               Model model) {
+        List<User> likeUserList = likeService.getLikeUserList(id, type);
+        model.addAttribute("section", "likeList");
+        model.addAttribute("sectionName", "点赞详情");
+        model.addAttribute("likeUserList", likeUserList);
         return "profile";
     }
 }
