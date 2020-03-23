@@ -3,6 +3,7 @@ package com.herokuapp.ddspace.controller;
 import com.herokuapp.ddspace.dto.AccessTokenDTO;
 import com.herokuapp.ddspace.dto.GithubUser;
 import com.herokuapp.ddspace.enums.ResultEnum;
+import com.herokuapp.ddspace.exception.CustomizeException;
 import com.herokuapp.ddspace.model.User;
 import com.herokuapp.ddspace.provider.GithubProvider;
 import com.herokuapp.ddspace.service.UserService;
@@ -51,8 +52,7 @@ public class AuthController {
             response.addCookie(new Cookie("token", token));
             return "redirect:/";
         } else {
-            model.addAttribute("message", ResultEnum.LOGIN_ERROR.getMessage());
-            return "error";
+            throw new CustomizeException(ResultEnum.LOGIN_ERROR);
         }
     }
 

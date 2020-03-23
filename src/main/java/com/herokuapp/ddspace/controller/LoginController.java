@@ -5,6 +5,7 @@ import com.herokuapp.ddspace.exception.CustomizeException;
 import com.herokuapp.ddspace.mapper.UserMapper;
 import com.herokuapp.ddspace.model.User;
 import com.herokuapp.ddspace.model.UserExample;
+import com.herokuapp.ddspace.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -21,10 +22,13 @@ import java.util.List;
 import java.util.UUID;
 
 @Controller
-@AllArgsConstructor
 public class LoginController {
 
+    @Autowired
     private UserMapper userMapper;
+
+    @Autowired
+    private UserService userService;
 
     @GetMapping("/login")
     public String login(HttpServletRequest request, Model model) {
@@ -63,8 +67,7 @@ public class LoginController {
             // set token
             String token = UUID.randomUUID().toString();
             user.setToken(token);
-            user.setGmtModified(System.currentTimeMillis());
-            userMapper.updateByPrimaryKeySelective(user);
+            userService.updateById(user);
             response.addCookie(new Cookie("token", token));
             return "redirect:/";
         } else {
@@ -87,7 +90,7 @@ public class LoginController {
                              @RequestParam("bio") String bio,
                              Model model) {
         if (username == null || username.equals("")) {
-            model.addAttribute("error", "邮箱不能为空");
+            model.addAttribute("error", "用户名不能为空");
             return "register";
         }
         if (name == null || name.equals("")) {
@@ -111,7 +114,7 @@ public class LoginController {
         example.createCriteria().andUsernameEqualTo(username);
         List<User> users = userMapper.selectByExample(example);
         if (users != null && users.size() != 0) {
-            model.addAttribute("error", "邮箱已存在");
+            model.addAttribute("error", "用户名已存在");
             return "register";
         }
 

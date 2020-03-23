@@ -46,4 +46,11 @@ public class UserService {
         }
         return user;
     }
+
+    @CachePut(value = "user", key = "#result.id", condition = "#result.id != null")
+    public User updateById(User user) {
+        user.setGmtModified(System.currentTimeMillis());
+        userMapper.updateByPrimaryKeySelective(user);
+        return user;
+    }
 }
