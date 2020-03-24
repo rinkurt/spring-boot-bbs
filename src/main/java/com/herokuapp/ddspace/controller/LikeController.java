@@ -1,12 +1,11 @@
 package com.herokuapp.ddspace.controller;
 
-import com.herokuapp.ddspace.dto.CommentType;
+import com.herokuapp.ddspace.enums.CommentType;
 import com.herokuapp.ddspace.dto.LikeDTO;
 import com.herokuapp.ddspace.enums.ResultEnum;
 import com.herokuapp.ddspace.mapper.*;
 import com.herokuapp.ddspace.model.*;
 import com.herokuapp.ddspace.service.LikeService;
-import com.herokuapp.ddspace.service.NotificationService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Controller;

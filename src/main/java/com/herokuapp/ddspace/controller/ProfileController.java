@@ -4,6 +4,7 @@ import com.herokuapp.ddspace.dto.LikeNotifyDTO;
 import com.herokuapp.ddspace.dto.NotificationDTO;
 import com.herokuapp.ddspace.dto.PaginationDTO;
 import com.herokuapp.ddspace.dto.QuestionDTO;
+import com.herokuapp.ddspace.enums.LoginMessage;
 import com.herokuapp.ddspace.enums.ResultEnum;
 import com.herokuapp.ddspace.exception.CustomizeException;
 import com.herokuapp.ddspace.mapper.UserMapper;
@@ -13,6 +14,7 @@ import com.herokuapp.ddspace.service.LikeService;
 import com.herokuapp.ddspace.service.NotificationService;
 import com.herokuapp.ddspace.service.QuestionService;
 import com.herokuapp.ddspace.service.UserService;
+import jodd.crypt.BCrypt;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -101,14 +103,18 @@ public class ProfileController {
             throw new CustomizeException(ResultEnum.NO_LOGIN);
         }
         if (!StringUtils.isEmpty(password) && !password.equals(rePassword)) {
-            model.addAttribute("error", "密码不一致");
+            model.addAttribute("error", LoginMessage.PASSWORD_NOT_MATCH);
+            return "update_profile";
+        }
+        if (password != null && password.length() > 30) {
+            model.addAttribute("error", LoginMessage.PASSWORD_TOO_LONG);
             return "update_profile";
         }
         UserExample example = new UserExample();
         example.createCriteria().andUsernameEqualTo(username);
         List<User> users = userMapper.selectByExample(example);
         if (!sessionUser.getUsername().equals(username) && users != null && users.size() != 0) {
-            model.addAttribute("error", "用户名已存在");
+            model.addAttribute("error", LoginMessage.USERNAME_EXISTS);
             return "update_profile";
         }
 
@@ -118,7 +124,7 @@ public class ProfileController {
             user.setUsername(username);
         }
         if (!StringUtils.isEmpty(password)) {
-            user.setPassword(password);
+            user.setPassword(BCrypt.hashpw(password, BCrypt.gensalt()));
         }
         if (!StringUtils.isEmpty(name)) {
             user.setName(name);

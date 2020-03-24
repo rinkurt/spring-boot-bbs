@@ -1,6 +1,6 @@
 package com.herokuapp.ddspace.controller;
 
-import com.herokuapp.ddspace.dto.CommentType;
+import com.herokuapp.ddspace.enums.CommentType;
 import com.herokuapp.ddspace.enums.ResultEnum;
 import com.herokuapp.ddspace.exception.CustomizeException;
 import com.herokuapp.ddspace.mapper.CommentMapper;
@@ -8,7 +8,6 @@ import com.herokuapp.ddspace.mapper.NotificationMapper;
 import com.herokuapp.ddspace.model.Comment;
 import com.herokuapp.ddspace.model.Notification;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

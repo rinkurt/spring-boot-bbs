@@ -1,7 +1,7 @@
 package com.herokuapp.ddspace.controller;
 
 import com.herokuapp.ddspace.dto.CommentDTO;
-import com.herokuapp.ddspace.dto.CommentType;
+import com.herokuapp.ddspace.enums.CommentType;
 import com.herokuapp.ddspace.dto.QuestionDTO;
 import com.herokuapp.ddspace.mapper.QuestionExtMapper;
 import com.herokuapp.ddspace.model.Question;
@@ -9,7 +9,6 @@ import com.herokuapp.ddspace.model.User;
 import com.herokuapp.ddspace.service.CommentService;
 import com.herokuapp.ddspace.service.QuestionService;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;

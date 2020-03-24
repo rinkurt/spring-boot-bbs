@@ -1,16 +1,18 @@
 package com.herokuapp.ddspace.controller;
 
+import com.herokuapp.ddspace.enums.LoginMessage;
 import com.herokuapp.ddspace.enums.ResultEnum;
 import com.herokuapp.ddspace.exception.CustomizeException;
 import com.herokuapp.ddspace.mapper.UserMapper;
 import com.herokuapp.ddspace.model.User;
 import com.herokuapp.ddspace.model.UserExample;
 import com.herokuapp.ddspace.service.UserService;
-import lombok.AllArgsConstructor;
+import jodd.crypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -46,24 +48,24 @@ public class LoginController {
                           @RequestParam("password") String password,
                           Model model,
                           HttpServletResponse response) {
-        if (username == null || username.equals("")) {
-            model.addAttribute("error", "邮箱不能为空");
+        if (StringUtils.isEmpty(username)) {
+            model.addAttribute("error", LoginMessage.USERNAME_EMPTY);
             return "login";
         }
-        if (password == null || password.equals("")) {
-            model.addAttribute("error", "密码不能为空");
+        if (StringUtils.isEmpty(password)) {
+            model.addAttribute("error", LoginMessage.PASSWORD_EMPTY);
             return "login";
         }
 
         UserExample example = new UserExample();
         example.createCriteria().andUsernameEqualTo(username);
         List<User> users = userMapper.selectByExample(example);
-        if (users == null || users.size() == 0) {
-            model.addAttribute("error", "用户不存在");
+        if (CollectionUtils.isEmpty(users)) {
+            model.addAttribute("error", LoginMessage.USER_NOT_EXIST);
             return "login";
         }
         User user = users.get(0);
-        if (user.getPassword().equals(password)) {
+        if (BCrypt.checkpw(password, user.getPassword())) {
             // set token
             String token = UUID.randomUUID().toString();
             user.setToken(token);
@@ -71,7 +73,7 @@ public class LoginController {
             response.addCookie(new Cookie("token", token));
             return "redirect:/";
         } else {
-            model.addAttribute("error", "密码错误");
+            model.addAttribute("error", LoginMessage.WRONG_PASSWORD);
             return "login";
         }
     }
@@ -89,24 +91,28 @@ public class LoginController {
                              @RequestParam("re_password") String rePassword,
                              @RequestParam("bio") String bio,
                              Model model) {
-        if (username == null || username.equals("")) {
-            model.addAttribute("error", "用户名不能为空");
+        if (StringUtils.isEmpty(username)) {
+            model.addAttribute("error", LoginMessage.USERNAME_EMPTY);
             return "register";
         }
-        if (name == null || name.equals("")) {
-            model.addAttribute("error", "名字不能为空");
+        if (StringUtils.isEmpty(name)) {
+            model.addAttribute("error", LoginMessage.NAME_EMPTY);
             return "register";
         }
-        if (password == null || password.equals("")) {
-            model.addAttribute("error", "密码不能为空");
+        if (StringUtils.isEmpty(password)) {
+            model.addAttribute("error", LoginMessage.PASSWORD_EMPTY);
             return "register";
         }
-        if (rePassword == null || rePassword.equals("")) {
-            model.addAttribute("error", "确认密码不能为空");
+        if (StringUtils.isEmpty(rePassword)) {
+            model.addAttribute("error", LoginMessage.RE_PASSWORD_EMPTY);
             return "register";
         }
         if (!password.equals(rePassword)) {
-            model.addAttribute("error", "密码不一致");
+            model.addAttribute("error", LoginMessage.PASSWORD_NOT_MATCH);
+            return "register";
+        }
+        if (password.length() > 30) {
+            model.addAttribute("error", LoginMessage.PASSWORD_TOO_LONG);
             return "register";
         }
 
@@ -114,13 +120,13 @@ public class LoginController {
         example.createCriteria().andUsernameEqualTo(username);
         List<User> users = userMapper.selectByExample(example);
         if (users != null && users.size() != 0) {
-            model.addAttribute("error", "用户名已存在");
+            model.addAttribute("error", LoginMessage.USERNAME_EXISTS);
             return "register";
         }
 
         User user = new User();
         user.setUsername(username);
-        user.setPassword(password);
+        user.setPassword(BCrypt.hashpw(password, BCrypt.gensalt()));
         user.setName(name);
         user.setGmtCreate(System.currentTimeMillis());
         user.setGmtModified(user.getGmtCreate());

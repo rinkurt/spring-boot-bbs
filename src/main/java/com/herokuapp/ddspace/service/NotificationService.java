@@ -1,7 +1,7 @@
 package com.herokuapp.ddspace.service;
 
 import com.herokuapp.ddspace.cache.AnonymousUser;
-import com.herokuapp.ddspace.dto.CommentType;
+import com.herokuapp.ddspace.enums.CommentType;
 import com.herokuapp.ddspace.dto.NotificationDTO;
 import com.herokuapp.ddspace.dto.PaginationDTO;
 import com.herokuapp.ddspace.enums.ResultEnum;

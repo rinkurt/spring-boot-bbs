@@ -1,6 +1,6 @@
 package com.herokuapp.ddspace.service;
 
-import com.herokuapp.ddspace.dto.CommentType;
+import com.herokuapp.ddspace.enums.CommentType;
 import com.herokuapp.ddspace.dto.LikeNotifyDTO;
 import com.herokuapp.ddspace.enums.ResultEnum;
 import com.herokuapp.ddspace.mapper.CommentMapper;
@@ -10,7 +10,6 @@ import com.herokuapp.ddspace.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.*;

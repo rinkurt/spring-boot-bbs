@@ -2,7 +2,7 @@ package com.herokuapp.ddspace.service;
 
 import com.herokuapp.ddspace.cache.AnonymousUser;
 import com.herokuapp.ddspace.dto.CommentDTO;
-import com.herokuapp.ddspace.dto.CommentType;
+import com.herokuapp.ddspace.enums.CommentType;
 import com.herokuapp.ddspace.enums.ResultEnum;
 import com.herokuapp.ddspace.mapper.*;
 import com.herokuapp.ddspace.model.*;

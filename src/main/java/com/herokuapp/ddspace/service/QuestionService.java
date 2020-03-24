@@ -1,12 +1,11 @@
 package com.herokuapp.ddspace.service;
 
 import com.herokuapp.ddspace.cache.AnonymousUser;
-import com.herokuapp.ddspace.dto.CommentType;
+import com.herokuapp.ddspace.enums.CommentType;
 import com.herokuapp.ddspace.dto.PaginationDTO;
 import com.herokuapp.ddspace.dto.QuestionDTO;
 import com.herokuapp.ddspace.exception.CustomizeException;
 import com.herokuapp.ddspace.enums.ResultEnum;
-import com.herokuapp.ddspace.mapper.LikesMapper;
 import com.herokuapp.ddspace.mapper.QuestionExtMapper;
 import com.herokuapp.ddspace.mapper.QuestionMapper;
 import com.herokuapp.ddspace.mapper.UserMapper;

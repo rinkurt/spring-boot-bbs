@@ -1,7 +1,7 @@
 package com.herokuapp.ddspace.scheduling;
 
 import com.herokuapp.ddspace.MyUtils;
-import com.herokuapp.ddspace.dto.CommentType;
+import com.herokuapp.ddspace.enums.CommentType;
 import com.herokuapp.ddspace.mapper.CommentMapper;
 import com.herokuapp.ddspace.mapper.LikesMapper;
 import com.herokuapp.ddspace.mapper.QuestionMapper;
