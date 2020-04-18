@@ -1,4 +1,4 @@
-package com.herokuapp.ddspace.enums;
+package com.herokuapp.ddmura.enums;
 
 public class LoginMessage {
     public static final String PASSWORD_NOT_MATCH = "密码不一致";

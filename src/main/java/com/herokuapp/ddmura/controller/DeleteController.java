@@ -1,12 +1,11 @@
-package com.herokuapp.ddspace.controller;
+package com.herokuapp.ddmura.controller;
 
-import com.herokuapp.ddspace.enums.ResultEnum;
-import com.herokuapp.ddspace.exception.CustomizeException;
-import com.herokuapp.ddspace.mapper.QuestionMapper;
-import com.herokuapp.ddspace.model.Question;
-import com.herokuapp.ddspace.model.User;
+import com.herokuapp.ddmura.enums.ResultEnum;
+import com.herokuapp.ddmura.exception.CustomizeException;
+import com.herokuapp.ddmura.mapper.QuestionMapper;
+import com.herokuapp.ddmura.model.Question;
+import com.herokuapp.ddmura.model.User;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,10 +27,11 @@ public class DeleteController {
         if (question == null) {
             throw new CustomizeException(ResultEnum.QUESTION_NOT_FOUND);
         }
-        User user = (User) request.getSession().getAttribute("user");
-        if (user == null) {
+        Object obj = request.getSession().getAttribute("user");
+        if (!(obj instanceof User)) {
             throw new CustomizeException(ResultEnum.NO_LOGIN);
         }
+        User user = (User) obj;
         if (!question.getCreator().equals(user.getId())) {
             throw new CustomizeException(ResultEnum.PERMISSION_ERROR);
         }

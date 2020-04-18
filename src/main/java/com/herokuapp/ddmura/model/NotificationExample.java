@@ -1,4 +1,4 @@
-package com.herokuapp.ddspace.model;
+package com.herokuapp.ddmura.model;
 
 import java.util.ArrayList;
 import java.util.List;

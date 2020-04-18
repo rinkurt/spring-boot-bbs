@@ -1,12 +1,12 @@
-package com.herokuapp.ddspace.controller;
+package com.herokuapp.ddmura.controller;
 
-import com.herokuapp.ddspace.enums.LoginMessage;
-import com.herokuapp.ddspace.enums.ResultEnum;
-import com.herokuapp.ddspace.exception.CustomizeException;
-import com.herokuapp.ddspace.mapper.UserMapper;
-import com.herokuapp.ddspace.model.User;
-import com.herokuapp.ddspace.model.UserExample;
-import com.herokuapp.ddspace.service.UserService;
+import com.herokuapp.ddmura.enums.LoginMessage;
+import com.herokuapp.ddmura.enums.ResultEnum;
+import com.herokuapp.ddmura.exception.CustomizeException;
+import com.herokuapp.ddmura.mapper.UserMapper;
+import com.herokuapp.ddmura.model.User;
+import com.herokuapp.ddmura.model.UserExample;
+import com.herokuapp.ddmura.service.UserService;
 import jodd.crypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -34,8 +34,8 @@ public class LoginController {
 
     @GetMapping("/login")
     public String login(HttpServletRequest request, Model model) {
-        User user = (User) request.getSession().getAttribute("user");
-        if (user != null) {
+        Object obj = request.getSession().getAttribute("user");
+        if (obj instanceof User) {
             throw new CustomizeException(ResultEnum.REPETITIVE_LOGIN);
         }
         model.addAttribute("clientId", System.getenv("GITHUB_CLIENT_ID"));

@@ -1,10 +1,9 @@
-package com.herokuapp.ddspace.service;
+package com.herokuapp.ddmura.service;
 
-import com.herokuapp.ddspace.mapper.CommentMapper;
-import com.herokuapp.ddspace.model.Comment;
-import com.herokuapp.ddspace.model.CommentExample;
+import com.herokuapp.ddmura.mapper.CommentMapper;
+import com.herokuapp.ddmura.model.Comment;
+import com.herokuapp.ddmura.model.CommentExample;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

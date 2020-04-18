@@ -1,7 +1,7 @@
-package com.herokuapp.ddspace.mapper;
+package com.herokuapp.ddmura.mapper;
 
-import com.herokuapp.ddspace.model.User;
-import com.herokuapp.ddspace.model.UserExample;
+import com.herokuapp.ddmura.model.User;
+import com.herokuapp.ddmura.model.UserExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.RowBounds;

@@ -1,6 +1,6 @@
-package com.herokuapp.ddspace.cache;
+package com.herokuapp.ddmura.cache;
 
-import com.herokuapp.ddspace.model.User;
+import com.herokuapp.ddmura.model.User;
 import org.springframework.stereotype.Component;
 
 @Component

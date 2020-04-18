@@ -1,7 +1,7 @@
-package com.herokuapp.ddspace.mapper;
+package com.herokuapp.ddmura.mapper;
 
-import com.herokuapp.ddspace.model.Notification;
-import com.herokuapp.ddspace.model.NotificationExample;
+import com.herokuapp.ddmura.model.Notification;
+import com.herokuapp.ddmura.model.NotificationExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.RowBounds;

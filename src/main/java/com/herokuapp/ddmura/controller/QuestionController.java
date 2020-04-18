@@ -1,13 +1,15 @@
-package com.herokuapp.ddspace.controller;
+package com.herokuapp.ddmura.controller;
 
-import com.herokuapp.ddspace.dto.CommentDTO;
-import com.herokuapp.ddspace.enums.CommentType;
-import com.herokuapp.ddspace.dto.QuestionDTO;
-import com.herokuapp.ddspace.mapper.QuestionExtMapper;
-import com.herokuapp.ddspace.model.Question;
-import com.herokuapp.ddspace.model.User;
-import com.herokuapp.ddspace.service.CommentService;
-import com.herokuapp.ddspace.service.QuestionService;
+import com.herokuapp.ddmura.dto.CommentDTO;
+import com.herokuapp.ddmura.enums.CommentType;
+import com.herokuapp.ddmura.dto.QuestionDTO;
+import com.herokuapp.ddmura.enums.ResultEnum;
+import com.herokuapp.ddmura.exception.CustomizeException;
+import com.herokuapp.ddmura.mapper.QuestionExtMapper;
+import com.herokuapp.ddmura.model.Question;
+import com.herokuapp.ddmura.model.User;
+import com.herokuapp.ddmura.service.CommentService;
+import com.herokuapp.ddmura.service.QuestionService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,7 +29,9 @@ public class QuestionController {
 
     @GetMapping("/question/{id}")
     public String question(@PathVariable(name = "id") Integer id, Model model, HttpServletRequest request) {
-        User sessionUser = (User) request.getSession().getAttribute("user");
+        Object obj = request.getSession().getAttribute("user");
+        User sessionUser = obj instanceof User ? (User) obj : null;
+
         questionService.incView(id, 1);
         QuestionDTO questionDto = questionService.findById(id, sessionUser);
         List<CommentDTO> comments = commentService.findByParent(id, CommentType.QUESTION, sessionUser);

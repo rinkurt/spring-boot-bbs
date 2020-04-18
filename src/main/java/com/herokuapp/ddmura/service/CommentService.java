@@ -1,11 +1,11 @@
-package com.herokuapp.ddspace.service;
+package com.herokuapp.ddmura.service;
 
-import com.herokuapp.ddspace.cache.AnonymousUser;
-import com.herokuapp.ddspace.dto.CommentDTO;
-import com.herokuapp.ddspace.enums.CommentType;
-import com.herokuapp.ddspace.enums.ResultEnum;
-import com.herokuapp.ddspace.mapper.*;
-import com.herokuapp.ddspace.model.*;
+import com.herokuapp.ddmura.cache.AnonymousUser;
+import com.herokuapp.ddmura.dto.CommentDTO;
+import com.herokuapp.ddmura.enums.CommentType;
+import com.herokuapp.ddmura.enums.ResultEnum;
+import com.herokuapp.ddmura.mapper.*;
+import com.herokuapp.ddmura.model.*;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;

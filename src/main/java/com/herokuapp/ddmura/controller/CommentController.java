@@ -1,15 +1,15 @@
-package com.herokuapp.ddspace.controller;
+package com.herokuapp.ddmura.controller;
 
-import com.herokuapp.ddspace.dto.CommentCreateDTO;
-import com.herokuapp.ddspace.dto.CommentDTO;
-import com.herokuapp.ddspace.enums.CommentType;
-import com.herokuapp.ddspace.dto.ResultDTO;
-import com.herokuapp.ddspace.enums.ResultEnum;
-import com.herokuapp.ddspace.mapper.CommentMapper;
-import com.herokuapp.ddspace.model.Comment;
-import com.herokuapp.ddspace.model.User;
-import com.herokuapp.ddspace.service.CommentService;
-import com.herokuapp.ddspace.service.NotificationService;
+import com.herokuapp.ddmura.dto.CommentCreateDTO;
+import com.herokuapp.ddmura.dto.CommentDTO;
+import com.herokuapp.ddmura.enums.CommentType;
+import com.herokuapp.ddmura.dto.ResultDTO;
+import com.herokuapp.ddmura.enums.ResultEnum;
+import com.herokuapp.ddmura.mapper.CommentMapper;
+import com.herokuapp.ddmura.model.Comment;
+import com.herokuapp.ddmura.model.User;
+import com.herokuapp.ddmura.service.CommentService;
+import com.herokuapp.ddmura.service.NotificationService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Controller;
@@ -31,10 +31,11 @@ public class CommentController {
     @PostMapping("/comment")
     public Object post(@RequestBody CommentCreateDTO commentCreateDTO,
                        HttpServletRequest request) {
-        User user = (User) request.getSession().getAttribute("user");
-        if (user == null) {
+        Object obj = request.getSession().getAttribute("user");
+        if (!(obj instanceof User)) {
             return ResultEnum.NO_LOGIN;
         }
+        User user = (User) obj;
         if (commentCreateDTO == null || StringUtils.isEmpty(commentCreateDTO.getContent())) {
             return ResultEnum.EMPTY_COMMENT;
         }

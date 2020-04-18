@@ -1,11 +1,9 @@
-package com.herokuapp.ddspace.service;
+package com.herokuapp.ddmura.service;
 
-import com.herokuapp.ddspace.mapper.UserMapper;
-import com.herokuapp.ddspace.model.User;
-import com.herokuapp.ddspace.model.UserExample;
+import com.herokuapp.ddmura.mapper.UserMapper;
+import com.herokuapp.ddmura.model.User;
+import com.herokuapp.ddmura.model.UserExample;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;

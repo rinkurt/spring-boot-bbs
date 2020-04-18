@@ -1,10 +1,9 @@
-package com.herokuapp.ddspace.cache;
+package com.herokuapp.ddmura.cache;
 
-import com.herokuapp.ddspace.dto.HotTagDTO;
+import com.herokuapp.ddmura.dto.HotTagDTO;
 import lombok.Data;
 import org.springframework.stereotype.Component;
 
-import java.util.HashMap;
 import java.util.List;
 
 @Data

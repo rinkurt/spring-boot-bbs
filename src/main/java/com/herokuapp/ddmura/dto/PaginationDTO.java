@@ -1,4 +1,4 @@
-package com.herokuapp.ddspace.dto;
+package com.herokuapp.ddmura.dto;
 
 import lombok.Data;
 import org.apache.ibatis.session.RowBounds;

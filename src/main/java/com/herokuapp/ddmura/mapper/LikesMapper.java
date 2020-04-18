@@ -1,8 +1,8 @@
-package com.herokuapp.ddspace.mapper;
+package com.herokuapp.ddmura.mapper;
 
-import com.herokuapp.ddspace.model.Likes;
-import com.herokuapp.ddspace.model.LikesExample;
-import com.herokuapp.ddspace.model.LikesKey;
+import com.herokuapp.ddmura.model.Likes;
+import com.herokuapp.ddmura.model.LikesExample;
+import com.herokuapp.ddmura.model.LikesKey;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.RowBounds;

@@ -1,7 +1,7 @@
-package com.herokuapp.ddspace.advice;
+package com.herokuapp.ddmura.advice;
 
-import com.herokuapp.ddspace.exception.CustomizeException;
-import com.herokuapp.ddspace.enums.ResultEnum;
+import com.herokuapp.ddmura.exception.CustomizeException;
+import com.herokuapp.ddmura.enums.ResultEnum;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;

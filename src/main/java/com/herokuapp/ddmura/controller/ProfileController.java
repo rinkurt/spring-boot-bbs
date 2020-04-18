@@ -1,19 +1,19 @@
-package com.herokuapp.ddspace.controller;
+package com.herokuapp.ddmura.controller;
 
-import com.herokuapp.ddspace.dto.LikeNotifyDTO;
-import com.herokuapp.ddspace.dto.NotificationDTO;
-import com.herokuapp.ddspace.dto.PaginationDTO;
-import com.herokuapp.ddspace.dto.QuestionDTO;
-import com.herokuapp.ddspace.enums.LoginMessage;
-import com.herokuapp.ddspace.enums.ResultEnum;
-import com.herokuapp.ddspace.exception.CustomizeException;
-import com.herokuapp.ddspace.mapper.UserMapper;
-import com.herokuapp.ddspace.model.User;
-import com.herokuapp.ddspace.model.UserExample;
-import com.herokuapp.ddspace.service.LikeService;
-import com.herokuapp.ddspace.service.NotificationService;
-import com.herokuapp.ddspace.service.QuestionService;
-import com.herokuapp.ddspace.service.UserService;
+import com.herokuapp.ddmura.dto.LikeNotifyDTO;
+import com.herokuapp.ddmura.dto.NotificationDTO;
+import com.herokuapp.ddmura.dto.PaginationDTO;
+import com.herokuapp.ddmura.dto.QuestionDTO;
+import com.herokuapp.ddmura.enums.LoginMessage;
+import com.herokuapp.ddmura.enums.ResultEnum;
+import com.herokuapp.ddmura.exception.CustomizeException;
+import com.herokuapp.ddmura.mapper.UserMapper;
+import com.herokuapp.ddmura.model.User;
+import com.herokuapp.ddmura.model.UserExample;
+import com.herokuapp.ddmura.service.LikeService;
+import com.herokuapp.ddmura.service.NotificationService;
+import com.herokuapp.ddmura.service.QuestionService;
+import com.herokuapp.ddmura.service.UserService;
 import jodd.crypt.BCrypt;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -26,7 +26,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
-import java.util.Set;
 
 @Controller
 @AllArgsConstructor
@@ -44,10 +43,11 @@ public class ProfileController {
                           HttpServletRequest request,
                           @RequestParam(name = "page", defaultValue = "1") Integer page,
                           @RequestParam(name = "size", defaultValue = "10") Integer size) {
-        User user = (User) request.getSession().getAttribute("user");
-        if (user == null) {
-            return "error";
+        Object obj = request.getSession().getAttribute("user");
+        if (!(obj instanceof User)) {
+            throw new CustomizeException(ResultEnum.NO_LOGIN);
         }
+        User user = (User) obj;
         switch (action) {
             case "update":
                 return "update_profile";
@@ -98,10 +98,11 @@ public class ProfileController {
                              @RequestParam("bio") String bio,
                              HttpServletRequest request,
                              Model model) {
-        User sessionUser = (User) request.getSession().getAttribute("user");
-        if (sessionUser == null) {
+        Object obj = request.getSession().getAttribute("user");
+        if (!(obj instanceof User)) {
             throw new CustomizeException(ResultEnum.NO_LOGIN);
         }
+        User sessionUser = (User) obj;
         if (!StringUtils.isEmpty(password) && !password.equals(rePassword)) {
             model.addAttribute("error", LoginMessage.PASSWORD_NOT_MATCH);
             return "update_profile";

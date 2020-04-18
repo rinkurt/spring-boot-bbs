@@ -1,11 +1,12 @@
-package com.herokuapp.ddspace.controller;
+package com.herokuapp.ddmura.controller;
 
-import com.herokuapp.ddspace.mapper.QuestionMapper;
-import com.herokuapp.ddspace.model.Question;
-import com.herokuapp.ddspace.model.User;
-import com.herokuapp.ddspace.service.QuestionService;
+import com.herokuapp.ddmura.enums.ResultEnum;
+import com.herokuapp.ddmura.exception.CustomizeException;
+import com.herokuapp.ddmura.mapper.QuestionMapper;
+import com.herokuapp.ddmura.model.Question;
+import com.herokuapp.ddmura.model.User;
+import com.herokuapp.ddmura.service.QuestionService;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,8 +33,12 @@ public class PublishController {
                        HttpServletRequest request,
                        Model model) {
         Question question = questionMapper.selectByPrimaryKey(id);
-        User user = (User) request.getSession().getAttribute("user");
-        if (user == null || !user.getId().equals(question.getCreator())) {
+        Object obj = request.getSession().getAttribute("user");
+        if (!(obj instanceof User)) {
+            throw new CustomizeException(ResultEnum.NO_LOGIN);
+        }
+        User user = (User) obj;
+        if (!user.getId().equals(question.getCreator())) {
             return "redirect:/";
         } else {
             model.addAttribute("id", id);
@@ -70,7 +75,8 @@ public class PublishController {
             return "publish";
         }
 
-        User user = (User) request.getSession().getAttribute("user");
+        Object obj = request.getSession().getAttribute("user");
+        User user = obj instanceof User ? (User) obj : null;
 
         if (user == null) {
             model.addAttribute("error", "用户未登录");

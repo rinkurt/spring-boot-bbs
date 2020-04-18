@@ -1,6 +1,6 @@
-package com.herokuapp.ddspace.exception;
+package com.herokuapp.ddmura.exception;
 
-import com.herokuapp.ddspace.enums.ResultEnum;
+import com.herokuapp.ddmura.enums.ResultEnum;
 
 public class CustomizeException extends RuntimeException {
 

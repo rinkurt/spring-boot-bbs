@@ -1,4 +1,4 @@
-package com.herokuapp.ddspace.config;
+package com.herokuapp.ddmura.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.CacheManager;
@@ -21,7 +21,7 @@ import java.time.Duration;
 @EnableTransactionManagement
 public class RedisConfig {
 
-    @Value("${ddspace.cache.read-expire-time}")
+    @Value("${cache.read-expire-time}")
     private int defaultExpireTime;
 
 //    @Value("${cache.test.expire-time:180}")
@@ -49,13 +49,11 @@ public class RedisConfig {
 //        Map<String, RedisCacheConfiguration> configMap = new HashMap<>();
 //        configMap.put(testCacheName, defaultCacheConfig.entryTtl(Duration.ofSeconds(testExpireTime)));
 
-        RedisCacheManager cacheManager = RedisCacheManager.builder(lettuceConnectionFactory)
+        return RedisCacheManager.builder(lettuceConnectionFactory)
                 .cacheDefaults(defaultCacheConfig)
 //                .initialCacheNames(cacheNames)
 //                .withInitialCacheConfigurations(configMap)
                 .build();
-
-        return cacheManager;
     }
 
     @Bean

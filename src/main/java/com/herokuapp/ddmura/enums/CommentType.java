@@ -1,4 +1,4 @@
-package com.herokuapp.ddspace.enums;
+package com.herokuapp.ddmura.enums;
 
 /* 每次使用这个类型时，注意判断非法情况。
 * */

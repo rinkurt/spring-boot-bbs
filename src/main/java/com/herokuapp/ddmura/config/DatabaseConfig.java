@@ -1,4 +1,4 @@
-package com.herokuapp.ddspace.config;
+package com.herokuapp.ddmura.config;
 
 import com.zaxxer.hikari.*;
 import org.springframework.beans.factory.annotation.Value;

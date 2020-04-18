@@ -1,4 +1,4 @@
-package com.herokuapp.ddspace;
+package com.herokuapp.ddmura;
 
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
@@ -7,7 +7,7 @@ import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
 @SpringBootApplication
-@MapperScan("com.herokuapp.ddspace.mapper")
+@MapperScan("com.herokuapp.ddmura.mapper")
 @EnableScheduling
 @EnableCaching
 public class DemoApplication {

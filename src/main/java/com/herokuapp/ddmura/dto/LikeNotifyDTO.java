@@ -1,10 +1,9 @@
-package com.herokuapp.ddspace.dto;
+package com.herokuapp.ddmura.dto;
 
-import com.herokuapp.ddspace.model.User;
+import com.herokuapp.ddmura.model.User;
 import lombok.Data;
 
 import java.util.List;
-import java.util.Set;
 
 @Data
 public class LikeNotifyDTO {

@@ -1,4 +1,4 @@
-package com.herokuapp.ddspace.model;
+package com.herokuapp.ddmura.model;
 
 public class Question {
     /**

@@ -1,17 +1,15 @@
-package com.herokuapp.ddspace.scheduling;
+package com.herokuapp.ddmura.scheduling;
 
-import com.herokuapp.ddspace.cache.HotTagCache;
-import com.herokuapp.ddspace.dto.HotTagDTO;
-import com.herokuapp.ddspace.mapper.QuestionMapper;
-import com.herokuapp.ddspace.model.Question;
-import com.herokuapp.ddspace.model.QuestionExample;
-import lombok.AllArgsConstructor;
+import com.herokuapp.ddmura.cache.HotTagCache;
+import com.herokuapp.ddmura.dto.HotTagDTO;
+import com.herokuapp.ddmura.mapper.QuestionMapper;
+import com.herokuapp.ddmura.model.Question;
+import com.herokuapp.ddmura.model.QuestionExample;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Slf4j

@@ -1,12 +1,12 @@
-package com.herokuapp.ddspace.controller;
+package com.herokuapp.ddmura.controller;
 
-import com.herokuapp.ddspace.enums.CommentType;
-import com.herokuapp.ddspace.enums.ResultEnum;
-import com.herokuapp.ddspace.exception.CustomizeException;
-import com.herokuapp.ddspace.mapper.CommentMapper;
-import com.herokuapp.ddspace.mapper.NotificationMapper;
-import com.herokuapp.ddspace.model.Comment;
-import com.herokuapp.ddspace.model.Notification;
+import com.herokuapp.ddmura.enums.CommentType;
+import com.herokuapp.ddmura.enums.ResultEnum;
+import com.herokuapp.ddmura.exception.CustomizeException;
+import com.herokuapp.ddmura.mapper.CommentMapper;
+import com.herokuapp.ddmura.mapper.NotificationMapper;
+import com.herokuapp.ddmura.model.Comment;
+import com.herokuapp.ddmura.model.Notification;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

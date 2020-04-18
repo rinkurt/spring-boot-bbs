@@ -1,10 +1,10 @@
-package com.herokuapp.ddspace.interceptor;
+package com.herokuapp.ddmura.interceptor;
 
-import com.herokuapp.ddspace.mapper.NotificationMapper;
-import com.herokuapp.ddspace.mapper.UserMapper;
-import com.herokuapp.ddspace.model.NotificationExample;
-import com.herokuapp.ddspace.model.User;
-import com.herokuapp.ddspace.model.UserExample;
+import com.herokuapp.ddmura.mapper.NotificationMapper;
+import com.herokuapp.ddmura.mapper.UserMapper;
+import com.herokuapp.ddmura.model.NotificationExample;
+import com.herokuapp.ddmura.model.User;
+import com.herokuapp.ddmura.model.UserExample;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.HandlerInterceptor;

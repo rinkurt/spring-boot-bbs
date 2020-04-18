@@ -1,4 +1,4 @@
-package com.herokuapp.ddspace.enums;
+package com.herokuapp.ddmura.enums;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 

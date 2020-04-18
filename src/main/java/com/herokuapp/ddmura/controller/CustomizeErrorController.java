@@ -1,6 +1,6 @@
-package com.herokuapp.ddspace.controller;
+package com.herokuapp.ddmura.controller;
 
-import com.herokuapp.ddspace.enums.ResultEnum;
+import com.herokuapp.ddmura.enums.ResultEnum;
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -38,7 +38,8 @@ public class CustomizeErrorController implements ErrorController {
     }
 
     protected HttpStatus getStatus(HttpServletRequest request) {
-        Integer statusCode = (Integer)request.getAttribute("javax.servlet.error.status_code");
+        Object obj = request.getAttribute("javax.servlet.error.status_code");
+        Integer statusCode = obj instanceof Integer ? (Integer) obj : null;
         if (statusCode == null) {
             return HttpStatus.INTERNAL_SERVER_ERROR;
         } else {

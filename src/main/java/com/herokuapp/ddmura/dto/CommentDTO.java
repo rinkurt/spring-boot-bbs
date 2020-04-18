@@ -1,7 +1,7 @@
-package com.herokuapp.ddspace.dto;
+package com.herokuapp.ddmura.dto;
 
-import com.herokuapp.ddspace.model.Comment;
-import com.herokuapp.ddspace.model.User;
+import com.herokuapp.ddmura.model.Comment;
+import com.herokuapp.ddmura.model.User;
 import lombok.Data;
 
 @Data

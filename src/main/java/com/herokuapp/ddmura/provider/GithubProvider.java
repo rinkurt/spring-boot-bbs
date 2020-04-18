@@ -1,8 +1,8 @@
-package com.herokuapp.ddspace.provider;
+package com.herokuapp.ddmura.provider;
 
 import com.alibaba.fastjson.JSON;
-import com.herokuapp.ddspace.dto.AccessTokenDTO;
-import com.herokuapp.ddspace.dto.GithubUser;
+import com.herokuapp.ddmura.dto.AccessTokenDTO;
+import com.herokuapp.ddmura.dto.GithubUser;
 import okhttp3.*;
 import org.springframework.stereotype.Component;
 
