@@ -1,6 +1,6 @@
 # Spring Boot 实战演练——论坛
 
-Spring Boot + Bootstrap + Thymeleaf + PostgreSQL + Redis
+Spring Boot + Bootstrap + Thymeleaf + MyBatis + PostgreSQL + Redis
 
 Redis 的配置还没加到 heroku 中，需要在 heroku 中添加 redis 插件。本 repo 的 heroku branch 为不包含 redis 的版本。
 
