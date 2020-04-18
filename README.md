@@ -2,6 +2,8 @@
 
 Spring Boot + Bootstrap + Thymeleaf + PostgreSQL + Redis
 
+Redis 的配置还没加到 heroku 中，需要在 heroku 中添加 redis 插件。本 repo 的 heroku branch 为不包含 redis 的版本。
+
 参照[码匠社区](https://github.com/codedrinker/community)
 
 ## 本地运行（IntelliJ IDEA）
@@ -32,7 +34,7 @@ Spring Boot + Bootstrap + Thymeleaf + PostgreSQL + Redis
 ## Heroku 运行
 
 在 Heroku 的配置（App 管理页面 -> Settings -> Config Vars -> Reveal Config Vars）中添加：
- 
+
 ```
 GITHUB_CLIENT_ID
 GITHUB_CLIENT_SECRET
